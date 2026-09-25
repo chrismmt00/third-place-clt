@@ -2,7 +2,7 @@
 
 import { AuthError } from "next-auth";
 import { signIn, signOut, requireAdmin, requireOwner } from "@/lib/auth";
-import { db } from "@/lib/db";
+import { db } from "@/lib/prisma-db";
 import { hash, compare } from "bcryptjs";
 import { z } from "zod";
 import { credentialsSchema, emailSchema, passwordSchema } from "@/lib/passwords";

@@ -1,6 +1,6 @@
 import "server-only";
 import { createHmac } from "node:crypto";
-import { db } from "./db.js";
+import { db } from "./prisma-db.js";
 import { UserError } from "./errors.js";
 
 /** Only trust x-forwarded-for when the deployment proxy overwrites it. */

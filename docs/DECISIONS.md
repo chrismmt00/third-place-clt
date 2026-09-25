@@ -15,3 +15,7 @@ Christian confirmed frontend work is concurrent; backend task leaves page wiring
 ## Gate status
 
 Initial scaffold lint/build passed. Next build prints a generic Running TypeScript step but project contains no TypeScript sources. Client-boundary scan follows local imports and stops at use-server RPC boundaries. Dependency audit currently flags Prisma CLI transitive deepmerge-ts/mysql2 advisories; resolve or review before handoff.
+
+## Concurrent frontend database mock
+
+Frontend process repeatedly replaced src/lib/db.js after the backend commit. The real server-only Prisma singleton now lives in src/lib/prisma-db.js, and all backend imports point there. Preserve frontend work; replace its mock imports during later page integration. The in-memory mock must not be deployed as production persistence/authentication. This is a deliberate path deviation to avoid overwriting concurrent work.

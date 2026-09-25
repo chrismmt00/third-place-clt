@@ -1,6 +1,6 @@
 import "server-only";
 import { compare, hash } from "bcryptjs";
-import { db } from "./db.js";
+import { db } from "./prisma-db.js";
 import { credentialsSchema } from "./passwords.js";
 import { rateLimit } from "./rate-limit.js";
 import { serializable } from "./transaction.js";

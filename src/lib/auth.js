@@ -1,7 +1,7 @@
 import "server-only";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { db } from "./db.js";
+import { db } from "./prisma-db.js";
 import { authenticate } from "./authentication.js";
 import { UserError } from "./errors.js";
 

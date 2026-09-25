@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const state = vi.hoisted(() => ({ session: null, user: null }));
 vi.mock("next-auth", () => ({ default: () => ({ auth: async () => state.session }) }));
-vi.mock("../src/lib/db.js", () => ({ db: { adminUser: { findUnique: async () => state.user } } }));
+vi.mock("../src/lib/prisma-db.js", () => ({ db: { adminUser: { findUnique: async () => state.user } } }));
 import { requireAdmin, requireOwner } from "../src/lib/auth.js";
 import { authenticate } from "../src/lib/authentication.js";
 import { hash } from "bcryptjs";
