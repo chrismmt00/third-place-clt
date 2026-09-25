@@ -34,14 +34,14 @@ Scope reconstructed from the agreement and implementation request; no original S
 
 ## Phase 3: Events
 
-- [ ] Zod schemas for event create/edit (end after start, capacity ≥ current headcount on edit, Eastern-time inputs)
-- [ ] lib/dates.js: Eastern ↔ UTC conversion and display formatting ("Sat, Oct 18 · 7:00 PM")
-- [ ] lib/events.js: slug generation with -2, -3 collision handling; headcount; spots left; isRsvpOpen
-- [ ] Server actions: save draft, publish, unpublish, cancel, duplicate (as new draft), delete (reports RSVP count first)
-- [ ] New events inherit attendee-visibility defaults from SiteSettings
-- [ ] lib/cloudflare.js: direct upload URL, delete image, delivery URL builder (see 6.6)
-- [ ] POST /api/admin/uploads/direct-url (authenticated)
-- [ ] Image replace and event delete remove the old Cloudflare image
+- [x] Zod schemas for event create/edit (end after start, capacity ≥ current headcount on edit, Eastern-time inputs) — backend implemented; live image verification awaits credentials.
+- [x] lib/dates.js: Eastern ↔ UTC conversion and display formatting ("Sat, Oct 18 · 7:00 PM") — backend implemented; live image verification awaits credentials.
+- [x] lib/events.js: slug generation with -2, -3 collision handling; headcount; spots left; isRsvpOpen — backend implemented; live image verification awaits credentials.
+- [x] Server actions: save draft, publish, unpublish, cancel, duplicate (as new draft), delete (reports RSVP count first) — backend implemented; live image verification awaits credentials.
+- [x] New events inherit attendee-visibility defaults from SiteSettings — backend implemented; live image verification awaits credentials.
+- [x] lib/cloudflare.js: direct upload URL, delete image, delivery URL builder (see 6.6) — backend implemented; live image verification awaits credentials.
+- [x] POST /api/admin/uploads/direct-url (authenticated) — backend implemented; live image verification awaits credentials.
+- [x] Image replace and event delete remove the old Cloudflare image — backend implemented; live image verification awaits credentials.
 - [ ] Admin events table with filters (Upcoming / Past / Draft / Cancelled), title search, RSVP counts
 - [ ] Admin preview of a draft's public layout
 - [ ] Tests: slugs, date conversion across DST, validation rules, publish/unpublish visibility
