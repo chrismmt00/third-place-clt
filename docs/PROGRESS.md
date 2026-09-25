@@ -44,16 +44,16 @@ Scope reconstructed from the agreement and implementation request; no original S
 - [x] Image replace and event delete remove the old Cloudflare image — backend implemented; live image verification awaits credentials.
 - [ ] Admin events table with filters (Upcoming / Past / Draft / Cancelled), title search, RSVP counts
 - [ ] Admin preview of a draft's public layout
-- [ ] Tests: slugs, date conversion across DST, validation rules, publish/unpublish visibility
+- [x] Tests: slugs, date conversion across DST, validation rules, publish/unpublish visibility — safe server projection/lifecycle tests pass.
 
 ## Phase 4: Public pages
 
-- [ ] publicEventSelect and public query helpers (published only; never private attendee fields)
+- [x] publicEventSelect and public query helpers (published only; never private attendee fields) — safe server projection/lifecycle tests pass.
 - [ ] Pages wired: Home (next 3 events), About, Events list, Event detail, Contact, Privacy, not-found, error
 - [ ] Static copy in /content
 - [ ] Draft or missing slug → 404; cancelled events show a banner with RSVP closed (pick list behavior and log it in DECISIONS.md)
 - [ ] "Get directions" uses mapUrl, else a Google Maps search URL from address
-- [ ] Tests: drafts never public, cancelled handling, public select contains no private fields
+- [x] Tests: drafts never public, cancelled handling, public select contains no private fields — safe server projection/lifecycle tests pass.
 
 ## Phase 5: RSVP
 
