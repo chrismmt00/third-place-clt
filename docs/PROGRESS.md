@@ -57,13 +57,13 @@ Scope reconstructed from the agreement and implementation request; no original S
 
 ## Phase 5: RSVP
 
-- [ ] lib/turnstile.js: server-side verification
+- [x] lib/turnstile.js: server-side verification — backend implemented; unit gates pass.
 - [x] lib/rate-limit.js (see 6.5) — backend implementation and unit tests pass; UI wiring deferred.
-- [ ] RSVP Zod schema (phone only when collectPhone; guests 0..maxGuestsPerRsvp; note ≤ 500; consent required; honeypot)
-- [ ] RSVP server action with capacity-safe transaction (see 6.4); duplicate email → friendly message
-- [ ] Attendee visibility: count and/or opted-in list formatted server-side as "First L."
+- [x] RSVP Zod schema (phone only when collectPhone; guests 0..maxGuestsPerRsvp; note ≤ 500; consent required; honeypot) — backend implemented; unit gates pass.
+- [x] RSVP server action with capacity-safe transaction (see 6.4); duplicate email → friendly message — backend implemented; unit gates pass.
+- [x] Attendee visibility: count and/or opted-in list formatted server-side as "First L." — backend implemented; unit gates pass.
 - [ ] /admin/events/[id]/rsvps: summary, search, sort, cancel, delete
-- [ ] CSV export route (admin-only, formula-injection safe; see 6.7)
+- [x] CSV export route (admin-only, formula-injection safe; see 6.7) — backend implemented; unit gates pass.
 - [ ] Admin overview: upcoming events with headcount vs. capacity, RSVP totals, unread messages
 - [ ] Tests: isRsvpOpen matrix, guests count toward capacity, duplicate rejection, concurrent overbooking test, visibility formatting
 
