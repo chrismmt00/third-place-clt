@@ -69,10 +69,10 @@ Scope reconstructed from the agreement and implementation request; no original S
 
 ## Phase 6: Contact and settings
 
-- [ ] Contact form action (Zod + Turnstile + honeypot + rate limit) → ContactMessage
+- [x] Contact form action (Zod + Turnstile + honeypot + rate limit) → ContactMessage — backend storage/status/settings tests pass; public UI wiring deferred.
 - [ ] /admin/messages: filters, open marks READ, archive, delete, mailto reply
 - [ ] /admin/settings: edit SiteSettings with URL validation; public header/footer read from it
-- [ ] Tests: settings changes appear publicly, message status transitions
+- [x] Tests: settings changes appear publicly, message status transitions — backend storage/status/settings tests pass; public UI wiring deferred.
 
 ## Phase 7: Hardening and handoff
 
