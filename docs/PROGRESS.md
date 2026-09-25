@@ -22,15 +22,15 @@ Scope reconstructed from the agreement and implementation request; no original S
 
 ## Phase 2: Authentication
 
-- [ ] Auth.js v5 Credentials provider against AdminUser, bcrypt/argon2 hashes, generic error message
-- [ ] requireAdmin() / requireOwner() helpers in lib/auth.js (see 6.3)
-- [ ] Middleware/proxy redirect for /admin/* except /admin/login; admin API routes return 401
-- [ ] Login rate limiting + lockout after repeated failures
-- [ ] Forced password change on first login
+- [x] Auth.js v5 Credentials provider against AdminUser, bcrypt/argon2 hashes, generic error message — backend implementation and unit tests pass; UI wiring deferred.
+- [x] requireAdmin() / requireOwner() helpers in lib/auth.js (see 6.3) — backend implementation and unit tests pass; UI wiring deferred.
+- [x] Middleware/proxy redirect for /admin/* except /admin/login; admin API routes return 401 — backend implementation and unit tests pass; UI wiring deferred.
+- [x] Login rate limiting + lockout after repeated failures — backend implementation and unit tests pass; UI wiring deferred.
+- [x] Forced password change on first login — backend implementation and unit tests pass; UI wiring deferred.
 - [ ] Admin layout with nav + sign-out
 - [ ] /admin/account: change password
 - [ ] /admin/users (OWNER only): add, remove, reset password; last OWNER can't be removed or demoted
-- [ ] Tests: unauthenticated access, EDITOR blocked from users, lockout
+- [x] Tests: unauthenticated access, EDITOR blocked from users, lockout — backend implementation and unit tests pass; UI wiring deferred.
 
 ## Phase 3: Events
 
@@ -58,7 +58,7 @@ Scope reconstructed from the agreement and implementation request; no original S
 ## Phase 5: RSVP
 
 - [ ] lib/turnstile.js: server-side verification
-- [ ] lib/rate-limit.js (see 6.5)
+- [x] lib/rate-limit.js (see 6.5) — backend implementation and unit tests pass; UI wiring deferred.
 - [ ] RSVP Zod schema (phone only when collectPhone; guests 0..maxGuestsPerRsvp; note ≤ 500; consent required; honeypot)
 - [ ] RSVP server action with capacity-safe transaction (see 6.4); duplicate email → friendly message
 - [ ] Attendee visibility: count and/or opted-in list formatted server-side as "First L."
