@@ -1,0 +1,116 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  OWNER
+  EDITOR
+}
+enum EventStatus {
+  DRAFT
+  PUBLISHED
+  CANCELLED
+}
+enum RsvpStatus {
+  GOING
+  CANCELLED
+}
+enum MessageStatus {
+  NEW
+  READ
+  ARCHIVED
+}
+
+model AdminUser {
+  id                 String    @id @default(cuid())
+  email              String    @unique
+  name               String
+  passwordHash       String
+  role               Role      @default(EDITOR)
+  mustChangePassword Boolean   @default(true)
+  failedLoginCount   Int       @default(0)
+  lockedUntil        DateTime?
+  sessionVersion     Int       @default(0)
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+}
+
+model Event {
+  id                 String      @id @default(cuid())
+  slug               String      @unique
+  title              String
+  description        String
+  startsAt           DateTime
+  endsAt             DateTime
+  locationName       String
+  address            String
+  mapUrl             String?
+  imageId            String?     @unique
+  imageAlt           String      @default("")
+  status             EventStatus @default(DRAFT)
+  capacity           Int?
+  rsvpEnabled        Boolean     @default(true)
+  rsvpDeadline       DateTime?
+  collectPhone       Boolean     @default(false)
+  maxGuestsPerRsvp    Int         @default(0)
+  showAttendeeCount   Boolean     @default(false)
+  showAttendeeNames   Boolean     @default(false)
+  rsvps              Rsvp[]
+  createdAt          DateTime    @default(now())
+  updatedAt          DateTime    @updatedAt
+  @@index([status, startsAt])
+}
+
+model Rsvp {
+  id                 String     @id @default(cuid())
+  eventId            String
+  event              Event      @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  firstName          String
+  lastName           String
+  publicName         String
+  email              String
+  phone              String?
+  guestCount         Int        @default(0)
+  note               String?
+  publicNameConsent  Boolean    @default(false)
+  consentAt          DateTime
+  status             RsvpStatus @default(GOING)
+  createdAt          DateTime   @default(now())
+  updatedAt          DateTime   @updatedAt
+  @@unique([eventId, email])
+  @@index([eventId, status])
+}
+
+model ContactMessage {
+  id        String        @id @default(cuid())
+  name      String
+  email     String
+  subject   String
+  message   String
+  status    MessageStatus @default(NEW)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  @@index([status, createdAt])
+}
+
+model SiteSettings {
+  id                       String  @id @default("site")
+  siteName                 String  @default("Third Place CLT")
+  contactEmail             String  @default("")
+  instagramUrl             String  @default("")
+  facebookUrl              String  @default("")
+  chatUrl                  String  @default("")
+  showAttendeeCountDefault  Boolean @default(false)
+  showAttendeeNamesDefault  Boolean @default(false)
+}
+
+model RateLimitHit {
+  key       String   @id
+  count     Int      @default(1)
+  expiresAt DateTime
+  @@index([expiresAt])
+}

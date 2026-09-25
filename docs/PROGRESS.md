@@ -12,13 +12,13 @@ Scope reconstructed from the agreement and implementation request; no original S
 ## Phase 1: Foundation
 
 - [x] Next.js (latest stable, App Router, JavaScript) + Tailwind + ESLint; jsconfig.json with @/* alias
-- [ ] Folder structure per SCOPE.md §7
-- [ ] Prisma schema from SCOPE.md §4, adapted to the installed Prisma version's Neon setup (see 6.1)
-- [ ] lib/db.js Prisma singleton (server-only)
+- [x] Folder structure per SCOPE.md §7 — backend foundation implemented; validate/lint/unit gates pass.
+- [x] Prisma schema from SCOPE.md §4, adapted to the installed Prisma version's Neon setup (see 6.1) — backend foundation implemented; validate/lint/unit gates pass.
+- [x] lib/db.js Prisma singleton (server-only) — backend foundation implemented; validate/lint/unit gates pass.
 - [ ] First migration applied to the dev branch — BLOCKED: no confirmed nonproduction URL; SQL generated offline only.
-- [ ] prisma/seed.js: idempotent; creates the OWNER from SEED_ADMIN_EMAIL / SEED_ADMIN_PASSWORD and the SiteSettings singleton
-- [ ] .env.example matching SCOPE.md §8; .gitignore covers .env* except the example
-- [ ] Vitest configured; npm test runs
+- [x] prisma/seed.js: idempotent; creates the OWNER from SEED_ADMIN_EMAIL / SEED_ADMIN_PASSWORD and the SiteSettings singleton — backend foundation implemented; validate/lint/unit gates pass.
+- [x] .env.example matching SCOPE.md §8; .gitignore covers .env* except the example — backend foundation implemented; validate/lint/unit gates pass.
+- [x] Vitest configured; npm test runs — backend foundation implemented; validate/lint/unit gates pass.
 
 ## Phase 2: Authentication
 
