@@ -32,3 +32,13 @@ Frontend process repeatedly replaced src/lib/db.js after the backend commit. The
 - Prisma CLI transitive deepmerge-ts/mysql2 overridden to patched 8.0.2/3.24.4 compatible versions. Prisma validate/generate/migrate/seed and all tests passed after the override; npm audit reports zero vulnerabilities.
 - Disposable local PostgreSQL 17 verified migrations, seed idempotency and concurrency. This does not represent a configured Neon branch or deployment.
 - Automatic approval review rejected temporary HTTP server launch (blocked by policy); build and direct route tests passed, live HTTP checks remain unverified.
+
+## 2026-09-27: Reuse existing Cloudflare credential names
+
+Existing local credentials use CLOUDFLARE_IMAGES_ACCOUNT_ID,
+CLOUDFLARE_IMAGES_TOKEN and CLOUDFLARE_IMAGES_ACCOUNT_HASH. The backend now reads
+these names first, while retaining the earlier account-ID/public-hash aliases for
+compatibility. Removed only the empty alias entries added to .env. Preserved every
+configured credential, including Stream credentials; no Cloudflare token was
+created or rotated. Delivery URLs are constructed server-side, so the existing
+account hash does not need a NEXT_PUBLIC-prefixed environment entry.

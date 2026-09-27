@@ -89,7 +89,7 @@ Scope reconstructed from the agreement and implementation request; no original S
 
 - Confirm reconstructed SCOPE.md technical defaults; original sections were unavailable.
 - Confirm a nonproduction Neon/PostgreSQL branch and configure DATABASE_URL locally; do not paste credentials into chat.
-- Cloudflare Images credentials/account hash and card/hero/og/thumb variants.
+- Cloudflare Images credentials/account hash are already configured locally; confirm card/hero/og/thumb variants and live image operations.
 - Production Turnstile keys/domain configuration, deployment host/domain, initial OWNER credentials.
 - Client content/photos/contact/social links, brand approval, privacy retention and attendee collection/visibility policy.
 
@@ -99,16 +99,18 @@ Scope reconstructed from the agreement and implementation request; no original S
 
 ## Phase checks
 
+- 2026-09-27 Cloudflare environment correction: existing Images credentials reused, empty aliases removed, configured credential values preserved. Prisma validation, ESLint, 33 unit tests, client secret boundary and tracked-TypeScript checks PASS. No live Cloudflare mutations or database integration tests were run for this change.
+
 - Phase 1 backend: PASS validate/generate/lint/unit/build; local PostgreSQL migration and idempotent seed PASS. Neon setup remains external.
 - Phase 2 backend: PASS auth/lockout/fresh-role/forced-reset/last-owner tests and build; UI deferred.
-- Phase 3 backend: PASS validation, DST, slugs, lifecycle and build; live Images credentials pending.
+- Phase 3 backend: PASS validation, DST, slugs, lifecycle and build; Images credentials now recognized, live operations pending.
 - Phase 4 backend: PASS safe projections, draft exclusion/cancelled handling and build; pages deferred.
 - Phase 5 backend: PASS unit tests and real PostgreSQL 20-way concurrency (exactly 5 admitted for capacity 5), plus build.
 - Phase 6 backend: PASS message/settings tests and build; UI deferred.
 - Phase 7 backend: PASS headers configuration, robots/sitemap build, guides and static secret/TS gates; frontend/live-service checks deferred.
 - Final local gates: Node 24.19.0; Prisma 7.10 validate/generate, ESLint, 31 unit + 1 database integration test, Next production build PASS. npm audit: zero vulnerabilities.
 - Temporary HTTP server launch was rejected by automatic approval review with only blocked-by-policy detail; live HTTP smoke tests NOT RUN. Route functions have direct 401/403 tests.
-- No production database or deployment was touched.
+- No production migrations, seeds, data changes or deployment were performed.
 
 ## Acceptance checklist
 
@@ -118,7 +120,7 @@ Scope reconstructed from the agreement and implementation request; no original S
 | 2 | Public statuses and draft/missing 404 | Backend filtering PASS; actual page 404 DEFERRED |
 | 3 | Fresh admin authorization and owner controls | Backend PASS; frontend data loaders must be wired |
 | 4 | Lockout, forced reset, session invalidation | Backend PASS; browser flows DEFERRED |
-| 5 | Event lifecycle and images | Lifecycle PASS; live image operations BLOCKED on credentials |
+| 5 | Event lifecycle and images | Lifecycle PASS; existing Images credentials recognized; live operations/variants unverified |
 | 6 | Eastern DST boundary cases | PASS, including both Nov 1 01:30 occurrences and spring gap |
 | 7 | RSVP validation/duplicates/deadlines/guests | PASS |
 | 8 | Disposable database overbooking test | PASS: 20 parallel submissions, exactly 5 accepted |
@@ -126,7 +128,7 @@ Scope reconstructed from the agreement and implementation request; no original S
 | 10 | RSVP management and CSV | Backend queries/actions/export PASS; UI DEFERRED |
 | 11 | Contact storage/status/mailto | Backend PASS; UI/mailto DEFERRED |
 | 12 | Settings and public header/footer | Settings persistence/public query PASS; UI DEFERRED |
-| 13 | Live Cloudflare/Turnstile configuration | BLOCKED on production credentials/domain; dev stub/test keys provided |
+| 13 | Live Cloudflare/Turnstile configuration | Images credential names corrected; production Turnstile/domain and live checks still pending |
 | 14 | Shared rate limiter/trusted proxy | DB counter implementation/tests PASS; hosting header verification BLOCKED |
 | 15 | Headers/metadata/sitemap/robots | Config/handlers/helper/build PASS; per-page wiring and live HTTP DEFERRED |
 | 16 | Friendly form/admin errors | Backend safe result contract PASS; visible accessibility DEFERRED |
