@@ -64,3 +64,14 @@ The development seed uses owner@third-place-clt.test as a local fixture identity
 the existing private seed password, and forced password change. This is not the
 client's production owner. No production database operation or Cloudflare
 credential creation was performed.
+
+## 2026-09-28: Client-source copy adaptation
+
+Christian authorized using the client's Instagram introductions and Are.na website
+drafts to establish site copy. Updated existing src/content files while preserving
+the frontend's page-wiring ownership. These are adaptations of supplied client
+material, not an invented brand/story. Source URLs and editorial choices are in
+COPY_SOURCES.md. Historical Instagram logistics do not override newer meetup
+drafts or event-specific records. Unverified operational promises were removed;
+privacy stays a labeled draft until retention and provider/contact decisions are
+supplied. No production settings, database records or social accounts were changed.

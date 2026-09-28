@@ -54,7 +54,7 @@ Scope reconstructed from the agreement and implementation request; no original S
 
 - [x] publicEventSelect and public query helpers (published only; never private attendee fields) — safe server projection/lifecycle tests pass.
 - [ ] Pages wired: Home (next 3 events), About, Events list, Event detail, Contact, Privacy, not-found, error — DEFERRED: frontend wiring/visual verification, per Christian. Backend interfaces are in BACKEND_HANDOFF.md.
-- [ ] Static copy in /content — DEFERRED: frontend wiring/visual verification, per Christian. Backend interfaces are in BACKEND_HANDOFF.md.
+- [x] Static community copy in /content — adapted from client Instagram introductions and Are.na drafts on 2026-09-28; sources and remaining wiring in COPY_SOURCES.md. Privacy policy remains a client-review draft.
 - [ ] Draft or missing slug → 404; cancelled events show a banner with RSVP closed (pick list behavior and log it in DECISIONS.md) — DEFERRED: frontend wiring/visual verification, per Christian. Backend interfaces are in BACKEND_HANDOFF.md.
 - [ ] "Get directions" uses mapUrl, else a Google Maps search URL from address — DEFERRED: frontend wiring/visual verification, per Christian. Backend interfaces are in BACKEND_HANDOFF.md.
 - [x] Tests: drafts never public, cancelled handling, public select contains no private fields — safe server projection/lifecycle tests pass.
@@ -95,13 +95,15 @@ Scope reconstructed from the agreement and implementation request; no original S
 - Production Neon remains unchanged; production migration/initial OWNER provisioning requires the separate release process. Local development/test databases are configured in ignored .env.local.
 - Cloudflare Images credentials/account hash are already configured locally; confirm card/hero/og/thumb variants and live image operations.
 - Production Turnstile keys/domain configuration, deployment host/domain, initial OWNER credentials.
-- Client content/photos/contact/social links, brand approval, privacy retention and attendee collection/visibility policy.
+- Community copy and Instagram link supplied/adapted; still need client photos, contact/community-chat links, final copy/brand approval, privacy retention and attendee collection/visibility policy. See COPY_SOURCES.md.
 
 ## Change requests
 
 - Design handoff mentions waitlist, calendar/confirmation email, emailing attendees and galleries. Parked; not implemented.
 
 ## Phase checks
+
+- 2026-09-28 client-source copy pass: Instagram introductions and Are.na drafts reviewed; Home/About/Contact and shared event/RSVP/error copy updated, Events/SEO copy prepared for frontend wiring. Source/claim review, Prisma validation, ESLint, 35 tests (including local PostgreSQL integration), client secret boundary (37 modules), tracked-TypeScript check and production build PASS. No new copy-only tests added. Privacy is a labeled client-review draft; no page wiring or production data changed.
 
 - 2026-09-28 persistent local database setup: guarded migrations PASS for third_place_clt_dev and third_place_clt_test. Development seed ran twice: one OWNER, one settings row, forced password reset enabled. Production URL rejection PASS without connecting to Neon. Prisma validation, ESLint, 34 unit tests + 1 real local PostgreSQL concurrency test (exactly 5/20 admitted), client secret boundary, tracked-TypeScript checks and Next production build PASS. Both private environment files are ignored; existing Cloudflare credentials preserved.
 
@@ -140,5 +142,5 @@ Scope reconstructed from the agreement and implementation request; no original S
 | 16 | Friendly form/admin errors | Backend safe result contract PASS; visible accessibility DEFERRED |
 | 17 | Validate/lint/tests/build/no TS/secrets | PASS at backend checkpoint |
 | 18 | Nonproduction migration/seed/release plan | Persistent local PostgreSQL migration/idempotent seed PASS; production release/provisioning remains separate |
-| 19 | Client content/brand/privacy | BLOCKED on client inputs |
+| 19 | Client content/brand/privacy | Community copy and Instagram reviewed/adapted; final approval, photos/contact/chat and privacy policies still pending |
 | 20 | Deployment and admin guides | PASS, expressly labeled pending integration/launch |
