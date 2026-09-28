@@ -9,16 +9,28 @@ outstanding. The development loop never applies migrations or seeds to productio
   Vitest 5's supported range. The Codex bundled executable is available at
   `C:\Users\Chris\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin\node.exe`.
 - [ ] `npm ci` (postinstall generates Prisma's JavaScript client).
-- [ ] Copy `.env.example` to `.env`; fill values locally, never commit secrets.
+- [ ] On a new checkout, copy `.env.example` to `.env`; fill values locally, never commit secrets. Preserve existing configured credentials.
   `AUTH_SECRET` can be generated with `node -e "console.log(require('node:crypto').randomBytes(32).toString('base64url'))"` in your own terminal.
-- [ ] Set DATABASE_URL to an identified development Neon branch, never production.
+- [ ] Set DATABASE_URL in ignored `.env.local` to local PostgreSQL or an identified development Neon branch, never production. Set TEST_DATABASE_URL to a separate test database.
   For remote mutations also set NONPRODUCTION_DATABASE_HOST and
   PRODUCTION_DATABASE_HOST. Pooled and direct Neon endpoints normalize for checks.
+- [ ] Tooling loads shell values first, then `.env.local`, then `.env`. Prisma,
+  seed and Vitest share this order. Vitest deliberately reads `.env.local` even
+  in test mode; only TEST_DATABASE_URL enables integration tests. Set an empty
+  shell TEST_DATABASE_URL for unit-only checks. Never deploy `.env.local`.
 - [ ] `npm run db:validate` then `npm run db:generate`.
 - [ ] `npm run db:migrate` (guarded migration deploy, nonproduction only).
 - [ ] Set SEED_ADMIN_EMAIL/SEED_ADMIN_PASSWORD privately, then `npm run db:seed`.
   Run twice to confirm idempotency; existing users/passwords/settings are preserved.
 - [ ] `npm run verify` and `npm run build`.
+
+Current local setup (2026-09-28): PostgreSQL on localhost:5432 has separate
+third_place_clt_dev and third_place_clt_test databases. The ignored `.env.local`
+selects them, overriding the production Neon URL retained in `.env`. The local
+fixture OWNER is owner@third-place-clt.test; its initial password uses the existing
+private SEED_ADMIN_PASSWORD and must be changed on first login. Production owner
+details remain a release input. Do not seed the integration database with real
+attendees or client accounts.
 
 Disposable local PostgreSQL example (PowerShell; Docker must be running):
 

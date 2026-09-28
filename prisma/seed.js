@@ -1,4 +1,4 @@
-import "dotenv/config";
+import "../scripts/load-env.js";
 import { PrismaClient } from "@prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { hash } from "bcryptjs";

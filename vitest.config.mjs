@@ -1,4 +1,4 @@
-import "dotenv/config";
+import "./scripts/load-env.js";
 import { defineConfig } from "vitest/config";
 import { fileURLToPath } from "node:url";
 

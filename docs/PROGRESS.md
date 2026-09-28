@@ -4,6 +4,10 @@
 
 Christian confirmed concurrent frontend work. This task now owns backend only; page wiring and visual QA are deferred to that task.
 
+Reconfirmed 2026-09-28: supplied Neon is production and must remain unchanged;
+page wiring stays with frontend. Christian authorized dedicated local PostgreSQL
+development/test databases and .env.local instead.
+
 Scope reconstructed from the agreement and implementation request; no original SCOPE.md supplied.
 
 ## Backlog
@@ -15,7 +19,7 @@ Scope reconstructed from the agreement and implementation request; no original S
 - [x] Folder structure per SCOPE.md §7 — backend foundation implemented; validate/lint/unit gates pass.
 - [x] Prisma schema from SCOPE.md §4, adapted to the installed Prisma version's Neon setup (see 6.1) — backend foundation implemented; validate/lint/unit gates pass.
 - [x] Prisma singleton (server-only) — src/lib/prisma-db.js; path changed to avoid frontend mock collisions (DECISIONS.md).
-- [ ] First migration applied to the dev branch — BLOCKED for Neon: no confirmed branch configured. Migration applied successfully to disposable local PostgreSQL 17; seed twice left one owner and one settings row.
+- [x] First migration applied to the development database — dedicated local PostgreSQL replaces a Neon dev branch with Christian's authorization; verification recorded below.
 - [x] prisma/seed.js: idempotent; creates the OWNER from SEED_ADMIN_EMAIL / SEED_ADMIN_PASSWORD and the SiteSettings singleton — backend foundation implemented; validate/lint/unit gates pass.
 - [x] .env.example matching SCOPE.md §8; .gitignore covers .env* except the example — backend foundation implemented; validate/lint/unit gates pass.
 - [x] Vitest configured; npm test runs — backend foundation implemented; validate/lint/unit gates pass.
@@ -88,7 +92,7 @@ Scope reconstructed from the agreement and implementation request; no original S
 ## Needs from Christian
 
 - Confirm reconstructed SCOPE.md technical defaults; original sections were unavailable.
-- Confirm a nonproduction Neon/PostgreSQL branch and configure DATABASE_URL locally; do not paste credentials into chat.
+- Production Neon remains unchanged; production migration/initial OWNER provisioning requires the separate release process. Local development/test databases are configured in ignored .env.local.
 - Cloudflare Images credentials/account hash are already configured locally; confirm card/hero/og/thumb variants and live image operations.
 - Production Turnstile keys/domain configuration, deployment host/domain, initial OWNER credentials.
 - Client content/photos/contact/social links, brand approval, privacy retention and attendee collection/visibility policy.
@@ -99,9 +103,11 @@ Scope reconstructed from the agreement and implementation request; no original S
 
 ## Phase checks
 
+- 2026-09-28 persistent local database setup: guarded migrations PASS for third_place_clt_dev and third_place_clt_test. Development seed ran twice: one OWNER, one settings row, forced password reset enabled. Production URL rejection PASS without connecting to Neon. Prisma validation, ESLint, 34 unit tests + 1 real local PostgreSQL concurrency test (exactly 5/20 admitted), client secret boundary, tracked-TypeScript checks and Next production build PASS. Both private environment files are ignored; existing Cloudflare credentials preserved.
+
 - 2026-09-27 Cloudflare environment correction: existing Images credentials reused, empty aliases removed, configured credential values preserved. Prisma validation, ESLint, 33 unit tests, client secret boundary and tracked-TypeScript checks PASS. No live Cloudflare mutations or database integration tests were run for this change.
 
-- Phase 1 backend: PASS validate/generate/lint/unit/build; local PostgreSQL migration and idempotent seed PASS. Neon setup remains external.
+- Phase 1 backend: PASS validate/generate/lint/unit/build; persistent local PostgreSQL migration and idempotent seed PASS. Production Neon remains outside this development loop.
 - Phase 2 backend: PASS auth/lockout/fresh-role/forced-reset/last-owner tests and build; UI deferred.
 - Phase 3 backend: PASS validation, DST, slugs, lifecycle and build; Images credentials now recognized, live operations pending.
 - Phase 4 backend: PASS safe projections, draft exclusion/cancelled handling and build; pages deferred.
@@ -133,6 +139,6 @@ Scope reconstructed from the agreement and implementation request; no original S
 | 15 | Headers/metadata/sitemap/robots | Config/handlers/helper/build PASS; per-page wiring and live HTTP DEFERRED |
 | 16 | Friendly form/admin errors | Backend safe result contract PASS; visible accessibility DEFERRED |
 | 17 | Validate/lint/tests/build/no TS/secrets | PASS at backend checkpoint |
-| 18 | Nonproduction migration/seed/release plan | Local PostgreSQL PASS; persistent Neon/production setup BLOCKED |
+| 18 | Nonproduction migration/seed/release plan | Persistent local PostgreSQL migration/idempotent seed PASS; production release/provisioning remains separate |
 | 19 | Client content/brand/privacy | BLOCKED on client inputs |
 | 20 | Deployment and admin guides | PASS, expressly labeled pending integration/launch |

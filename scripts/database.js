@@ -1,4 +1,4 @@
-import "dotenv/config";
+import "./load-env.js";
 import { spawnSync } from "node:child_process";
 import { assertNonProductionDatabase } from "../src/lib/database-safety.js";
 

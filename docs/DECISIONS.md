@@ -42,3 +42,25 @@ compatibility. Removed only the empty alias entries added to .env. Preserved eve
 configured credential, including Stream credentials; no Cloudflare token was
 created or rotated. Delivery URLs are constructed server-side, so the existing
 account hash does not need a NEXT_PUBLIC-prefixed environment entry.
+
+## 2026-09-28: Confirmed production boundary and persistent local databases
+
+Christian classified the supplied Neon connection as production and explicitly
+asked to leave it unchanged. Its hostname is recorded in the ignored local
+PRODUCTION_DATABASE_HOST setting; development tooling rejects that target.
+Christian also reaffirmed that page wiring remains with the frontend task.
+
+Christian supplied and authorized local PostgreSQL instead. Dedicated databases
+third_place_clt_dev and third_place_clt_test replace the blocked development Neon
+branch requirement for this loop. Their connection URLs live only in ignored
+.env.local; the existing .env credentials are preserved. Prisma, seed and Vitest
+tooling now load shell overrides first, .env.local second and .env last. Unlike
+Next's normal test-mode convention, Vitest deliberately loads .env.local to obtain
+the explicitly configured TEST_DATABASE_URL; integration tests still never fall
+back to DATABASE_URL and retain the production guard. An empty shell
+TEST_DATABASE_URL disables integration tests.
+
+The development seed uses owner@third-place-clt.test as a local fixture identity,
+the existing private seed password, and forced password change. This is not the
+client's production owner. No production database operation or Cloudflare
+credential creation was performed.

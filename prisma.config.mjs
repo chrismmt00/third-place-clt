@@ -1,4 +1,4 @@
-import "dotenv/config";
+import "./scripts/load-env.js";
 import { defineConfig } from "prisma/config";
 
 // Validation and generation work offline. Mutating commands use scripts/database.js.
