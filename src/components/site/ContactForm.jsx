@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRef, useState, useTransition } from "react";
-import { CircleCheck, Clock, ShieldAlert } from "lucide-react";
+import { CircleCheck, Clock } from "lucide-react";
 import { copy } from "@/content/copy";
 import { validateContact } from "@/lib/validate";
 import { Alert } from "@/components/ui/Alert";
@@ -10,7 +10,6 @@ import { Button } from "@/components/ui/Button";
 import { Checkbox } from "@/components/ui/Checkbox";
 import { ErrorSummary } from "@/components/ui/ErrorSummary";
 import { Input, Textarea } from "@/components/ui/Field";
-import { Turnstile } from "./Turnstile";
 
 const EMPTY = { name: "", email: "", subject: "", message: "", consent: false, website: "" };
 const FIELD_ORDER = ["name", "email", "subject", "message", "consent"];
@@ -21,8 +20,6 @@ export function ContactForm({ action, contactEmail, uid = "contact" }) {
   const [sentTo, setSentTo] = useState("");
   const [errors, setErrors] = useState({});
   const [state, setState] = useState({ status: "idle" });
-  const [token, setToken] = useState("");
-  const [resetKey, setResetKey] = useState(0);
   const [pending, startTransition] = useTransition();
   const summaryRef = useRef(null);
   const id = (key) => `${uid}-${key}`;
@@ -69,7 +66,6 @@ export function ContactForm({ action, contactEmail, uid = "contact" }) {
     const form = new FormData();
     for (const key of ["name", "email", "subject", "message", "website"]) form.set(key, values[key]);
     form.set("consent", values.consent ? "on" : "");
-    form.set("cf-turnstile-response", token);
 
     startTransition(async () => {
       let result;
@@ -86,12 +82,9 @@ export function ContactForm({ action, contactEmail, uid = "contact" }) {
         showErrors(result.fields);
       } else if (result?.code === "RATE_LIMIT") {
         setState({ status: "limited" });
-      } else if (result?.code === "VERIFICATION") {
-        setState({ status: "verifyFailed" });
       } else {
         setState({ status: "error", message: result?.error });
       }
-      setResetKey((k) => k + 1); // Turnstile tokens are single-use.
     });
   };
 
@@ -105,11 +98,6 @@ export function ContactForm({ action, contactEmail, uid = "contact" }) {
         {status === "limited" && (
           <Alert tone="error" icon={Clock} title={copy.contact.limited}>
             {contactEmail ? copy.contact.limitedBody(contactEmail) : "Please wait a few minutes and try again."}
-          </Alert>
-        )}
-        {status === "verifyFailed" && (
-          <Alert tone="error" icon={ShieldAlert} title={copy.rsvp.verify}>
-            Please complete the check below and send your message again.
           </Alert>
         )}
         {status === "error" && <Alert tone="error">{state.message || `${copy.toast.saveFail[0]} ${copy.toast.saveFail[1]}`}</Alert>}
@@ -137,8 +125,6 @@ export function ContactForm({ action, contactEmail, uid = "contact" }) {
           <label htmlFor={id("website")}>Website</label>
           <input id={id("website")} tabIndex={-1} autoComplete="off" value={values.website} onChange={set("website")} />
         </div>
-
-        <Turnstile action="contact" onToken={setToken} resetKey={resetKey} />
 
         <Button type="submit" size="xl" loading={busy} loadingText={copy.contact.submitting}>
           {copy.contact.submit}

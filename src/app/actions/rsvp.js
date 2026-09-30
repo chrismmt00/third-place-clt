@@ -5,7 +5,6 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { createRsvp } from "@/lib/rsvp";
 import { rateLimit } from "@/lib/rate-limit";
-import { verifyTurnstile } from "@/lib/turnstile";
 import { actionError } from "@/lib/errors";
 import { requireAdmin } from "@/lib/auth";
 import { db } from "@/lib/prisma-db";
@@ -16,7 +15,6 @@ export async function submitRsvp(_previous, formData) {
     const data = Object.fromEntries(formData);
     z.object({ website: z.string().max(0).default(""), eventId: idSchema }).parse(data);
     await rateLimit("rsvp", await headers());
-    await verifyTurnstile(data["cf-turnstile-response"], "rsvp");
     const result = await createRsvp(data);
     revalidatePath("/", "layout");
     return result;

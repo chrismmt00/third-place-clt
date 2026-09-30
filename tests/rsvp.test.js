@@ -2,7 +2,6 @@ import { expect, it, vi } from "vitest";
 import { createRsvp } from "../src/lib/rsvp.js";
 import { serializable } from "../src/lib/transaction.js";
 import { csvCell } from "../src/lib/csv.js";
-import { verifyTurnstile } from "../src/lib/turnstile.js";
 
 const input = { eventId: "cjld2cjxh0000qzrmn831i7rn", firstName: "Maya", lastName: "Rivera", email: "maya@example.test", guestCount: 2, consent: true };
 function fakeDatabase({ capacity = 5, count = 0, duplicate = false } = {}) {
@@ -38,13 +37,4 @@ it("retries serialization failures at most three times", async () => {
 it("escapes CSV formulas and quoted multiline values", () => {
   for (const value of ["=1+1", "+SUM(A1)", "-1", "@cmd", "\tcmd", "\rcmd", "  =cmd"]) expect(csvCell(value)).toBe(`"'${value}"`);
   expect(csvCell('Hello, "friend"\nthere')).toBe('"Hello, ""friend""\nthere"');
-});
-
-it("fails closed on production test keys, invalid tokens, hostname and action", async () => {
-  const fetcher = vi.fn(async () => ({ ok: true, json: async () => ({ success: true, hostname: "thirdplace.test", action: "rsvp" }) }));
-  const env = { NODE_ENV: "production", TURNSTILE_SECRET_KEY: "test-fixture-not-a-real-secret", NEXT_PUBLIC_SITE_URL: "https://thirdplace.test" };
-  await expect(verifyTurnstile("token", "rsvp", { env, fetcher })).resolves.toBeUndefined();
-  await expect(verifyTurnstile("token", "contact", { env, fetcher })).rejects.toThrow();
-  await expect(verifyTurnstile("", "rsvp", { env, fetcher })).rejects.toThrow();
-  await expect(verifyTurnstile("token", "rsvp", { env: { ...env, TURNSTILE_SECRET_KEY: "1x0000000000000000000000000000000AA" }, fetcher })).rejects.toThrow();
 });

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRef, useState, useTransition } from "react";
-import { ArrowRight, Calendar, CircleCheck, Clock, Hourglass, MapPin, ShieldAlert, UserCheck, Users } from "lucide-react";
+import { ArrowRight, Calendar, CircleCheck, Clock, Hourglass, MapPin, UserCheck, Users } from "lucide-react";
 import { copy } from "@/content/copy";
 import { formatWeekday, formatWhenRange } from "@/lib/format";
 import { validateRsvp } from "@/lib/validate";
@@ -12,7 +12,6 @@ import { Checkbox } from "@/components/ui/Checkbox";
 import { ErrorSummary } from "@/components/ui/ErrorSummary";
 import { Input, Textarea } from "@/components/ui/Field";
 import { NumberStepper } from "@/components/ui/NumberStepper";
-import { Turnstile } from "./Turnstile";
 
 const FIELD_ORDER = ["firstName", "lastName", "email", "phone", "guestCount", "note", "consent"];
 const EMPTY = { firstName: "", lastName: "", email: "", phone: "", guestCount: 0, note: "", publicNameConsent: false, consent: false, website: "" };
@@ -33,8 +32,6 @@ function toState(result, guestCount) {
       return { status: "closed" };
     case "RATE_LIMIT":
       return { status: "limited" };
-    case "VERIFICATION":
-      return { status: "verifyFailed" };
     default:
       return { status: "error", message: result?.error };
   }
@@ -48,8 +45,6 @@ export function RsvpForm({ event, action, spotsLeft = null, subline = copy.rsvp.
   const [values, setValues] = useState(EMPTY);
   const [errors, setErrors] = useState({});
   const [state, setState] = useState({ status: "idle" });
-  const [token, setToken] = useState("");
-  const [resetKey, setResetKey] = useState(0);
   const [pending, startTransition] = useTransition();
   const summaryRef = useRef(null);
 
@@ -181,7 +176,6 @@ export function RsvpForm({ event, action, spotsLeft = null, subline = copy.rsvp.
     form.set("guestCount", String(values.guestCount));
     form.set("consent", values.consent ? "on" : "");
     form.set("publicNameConsent", values.publicNameConsent ? "on" : "");
-    form.set("cf-turnstile-response", token);
 
     startTransition(async () => {
       let result;
@@ -193,7 +187,6 @@ export function RsvpForm({ event, action, spotsLeft = null, subline = copy.rsvp.
       const next = toState(result, values.guestCount);
       if (next.status === "errors") showErrors(next.errors);
       else setState(next);
-      setResetKey((k) => k + 1); // Turnstile tokens are single-use.
     });
   };
 
@@ -221,11 +214,6 @@ export function RsvpForm({ event, action, spotsLeft = null, subline = copy.rsvp.
         {status === "limited" && (
           <Alert tone="error" icon={Clock} title={copy.rsvp.limited}>
             {copy.rsvp.limitedBody}
-          </Alert>
-        )}
-        {status === "verifyFailed" && (
-          <Alert tone="error" icon={ShieldAlert} title={copy.rsvp.verify}>
-            {copy.rsvp.verifyBody}
           </Alert>
         )}
         {status === "closed" && (
@@ -326,8 +314,6 @@ export function RsvpForm({ event, action, spotsLeft = null, subline = copy.rsvp.
           <label htmlFor={id("website")}>Website</label>
           <input id={id("website")} tabIndex={-1} autoComplete="off" value={values.website} onChange={set("website")} />
         </div>
-
-        <Turnstile action="rsvp" onToken={setToken} resetKey={resetKey} />
 
         <Button type="submit" size="xl" loading={busy} loadingText={copy.rsvp.submitting}>
           {copy.rsvp.submit}

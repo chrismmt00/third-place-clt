@@ -114,7 +114,7 @@ export const privacy = {
     ],
     [
       "Services that help the site work",
-      "Hosting and database services process the information needed to operate the site. Cloudflare Turnstile checks form submissions for spam. To limit repeated submissions, the site stores a protected identifier derived from an IP address rather than the raw address in its rate-limit records.",
+      "Hosting and database services process the information needed to operate the site. To limit repeated submissions, the site stores a protected identifier derived from an IP address rather than the raw address in its rate-limit records.",
     ],
     [
       "How long we keep it",

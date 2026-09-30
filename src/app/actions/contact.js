@@ -7,7 +7,6 @@ import { db } from "@/lib/prisma-db";
 import { requireAdmin } from "@/lib/auth";
 import { contactSchema, settingsSchema, idSchema } from "@/lib/validation";
 import { rateLimit } from "@/lib/rate-limit";
-import { verifyTurnstile } from "@/lib/turnstile";
 import { actionError } from "@/lib/errors";
 
 export async function submitContact(_previous, formData) {
@@ -15,7 +14,6 @@ export async function submitContact(_previous, formData) {
     const input = Object.fromEntries(formData);
     const { name, email, subject, message } = contactSchema.parse(input);
     await rateLimit("contact", await headers());
-    await verifyTurnstile(input["cf-turnstile-response"], "contact");
     await db.contactMessage.create({ data: { name, email, subject, message } });
     revalidatePath("/admin/messages");
     return { ok: true, message: "Your message has been received. Thank you!" };

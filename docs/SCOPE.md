@@ -20,7 +20,7 @@ Basic functional/responsive testing and deployment assistance.
 
 The implementation request specifies OWNER/EDITOR administration, password
 management, event cancellation/duplication, guest capacity, CSV export, stored
-contact messages, settings, Cloudflare Images and Turnstile, and SEO metadata.
+contact messages, settings, Cloudflare Images, and SEO metadata.
 These are implementation details of the included capabilities.
 
 ### 2.2 Excluded
@@ -82,7 +82,7 @@ Drafts and missing slugs return 404. New events inherit settings visibility.
 ### 5.2 RSVP
 
 Require name/email and consent; phone only when enabled; guests 0..event maximum;
-note <=500 chars; honeypot; Turnstile; rate limit 5/10 minutes. Check event
+note <=500 chars; honeypot; rate limit 5/10 minutes. Check event
 publication, enabled status, start/deadline and capacity. Serializable transaction
 loads event, sums GOING headcount, creates RSVP; retry P2034 three times. Unique
 email per event returns a friendly duplicate message. Server formats First L.
@@ -91,7 +91,7 @@ name combination. Capacity tests use 20 concurrent requests and 5 spots.
 
 ### 5.3 Contact and settings
 
-Zod + Turnstile + honeypot + 5/10 minute rate limit stores a message. Admin search,
+Zod + honeypot + 5/10 minute rate limit stores a message. Admin search,
 filters, READ when explicitly opened, archive/delete, mailto reply. Settings
 validate external URLs as http/https, optional empty links allowed. Header/footer
 read settings. Content lives in source files, not a CMS.
@@ -122,7 +122,8 @@ DB changes. Failed cleanup logs a generic message and does not undo the operatio
 Use card/hero/og/thumb variants. Missing credentials must yield explicit disabled
 or development stub behavior, never an insecure production bypass.
 
-Turnstile verifies server-side; documented testing keys only outside production.
+Turnstile removed at the user’s request on September 30, 2026. Public forms retain
+server validation, honeypots and rate limits.
 CSV admin-only; quote fields and double embedded quotes; prefix cells beginning
 with =,+,-,@,tab,CR with apostrophe. Filename uses sanitized slug and date.
 Unit tests use Vitest. Database integration tests require TEST_DATABASE_URL and
@@ -133,7 +134,7 @@ refuse production-equivalent URLs. No mutation tests on DATABASE_URL.
 Keep existing src layout and @/* -> ./src/* alias. src/app: public pages,
 admin/login, admin/(protected) route group, api/auth, api/admin. src/components:
 reusable view/form components. src/lib: db, auth, events, dates, validation,
-cloudflare, turnstile, rate-limit, rsvp and CSV helpers. src/content: static copy.
+cloudflare, rate-limit, rsvp and CSV helpers. src/content: static copy.
 prisma: schema/migrations/seed.js. tests: unit and integration. docs: this scope,
 PROGRESS, DECISIONS, DEPLOY, ADMIN_GUIDE and design reference files.
 
@@ -142,8 +143,7 @@ PROGRESS, DECISIONS, DEPLOY, ADMIN_GUIDE and design reference files.
 DATABASE_URL; TEST_DATABASE_URL; NONPRODUCTION_DATABASE_HOST;
 PRODUCTION_DATABASE_HOST; AUTH_SECRET; AUTH_URL; SEED_ADMIN_EMAIL;
 SEED_ADMIN_PASSWORD; CLOUDFLARE_IMAGES_ACCOUNT_ID; CLOUDFLARE_IMAGES_TOKEN;
-CLOUDFLARE_IMAGES_ACCOUNT_HASH; NEXT_PUBLIC_TURNSTILE_SITE_KEY;
-TURNSTILE_SECRET_KEY; NEXT_PUBLIC_SITE_URL. Never populate secrets in tracked files.
+CLOUDFLARE_IMAGES_ACCOUNT_HASH; NEXT_PUBLIC_SITE_URL. Never populate secrets in tracked files.
 Commit only .env.example. Nonproduction/production host declarations support
 fail-closed mutation safeguards. Deployment must identify trusted proxy IP headers.
 
@@ -190,7 +190,7 @@ continue independent work. Three failures on a task -> record blocker and contin
 - [ ] RSVP admin search/sort/cancel/delete and safe CSV export work.
 - [ ] Contact messages persist; admin READ/archive/delete/mailto work.
 - [ ] Settings update public header/footer; external URLs validated.
-- [ ] Real Cloudflare image upload/delete and Turnstile production configuration verified.
+- [ ] Real Cloudflare image upload/delete configuration verified.
 - [ ] Rate limits share PostgreSQL state; trusted IP header deployment verified.
 - [ ] Security headers, SEO metadata/OG, sitemap/robots configured.
 - [ ] All forms/admin actions have accessible friendly error states.
@@ -205,7 +205,7 @@ This reconstructed checklist is not represented as the absent original checklist
 
 Install dependencies; configure nonproduction secrets; validate/generate Prisma;
 apply migration and seed only to confirmed dev DB; run gates and integration tests;
-configure Cloudflare variants/Turnstile domains; set production secrets in host;
+configure Cloudflare variants; set production secrets in host;
 review/apply migration through an explicit production release process (not this
 development loop); provision initial owner securely; build/deploy to agreed host;
 configure domain/TLS; verify public/admin flows and backups; collect client review.

@@ -2,6 +2,13 @@
 
 ## Status
 
+2026-09-30 Turnstile removal: disabled throughout RSVP/contact UI and actions,
+removed private/example keys and challenge CSP allowances, updated privacy copy
+and release checks. The existing seed password now lives only in `.env.local`.
+Prisma validation, lint, all 52 tests, client-secret/JavaScript gates and production
+build pass. Offline `.env` production check now reports only AUTH_URL and
+NEXT_PUBLIC_SITE_URL still using localhost. No production database writes.
+
 2026-09-30 production preparation is in progress: account email/name changes and
 guarded first-owner provisioning implemented; private credentials prepared but not
 activated in production. The existing frontend is now part of the release checkpoint.
@@ -76,7 +83,7 @@ Scope reconstructed from the agreement and implementation request; no original S
 
 ## Phase 5: RSVP
 
-- [x] lib/turnstile.js: server-side verification — backend implemented; unit gates pass.
+- [x] Turnstile removed at user request on 2026-09-30; honeypots/rate limits retained.
 - [x] lib/rate-limit.js (see 6.5) — backend implementation and unit tests pass; UI wiring deferred.
 - [x] RSVP Zod schema (phone only when collectPhone; guests 0..maxGuestsPerRsvp; note ≤ 500; consent required; honeypot) — backend implemented; unit gates pass.
 - [x] RSVP server action with capacity-safe transaction (see 6.4); duplicate email → friendly message — backend implemented; unit gates pass.
@@ -88,14 +95,14 @@ Scope reconstructed from the agreement and implementation request; no original S
 
 ## Phase 6: Contact and settings
 
-- [x] Contact form action (Zod + Turnstile + honeypot + rate limit) → ContactMessage — backend storage/status/settings tests pass; public UI wiring deferred.
+- [x] Contact form action (Zod + honeypot + rate limit) → ContactMessage — backend storage/status/settings tests pass; public UI wiring deferred.
 - [ ] /admin/messages: filters, open marks READ, archive, delete, mailto reply — DEFERRED: frontend wiring/visual verification, per Christian. Backend interfaces are in BACKEND_HANDOFF.md.
 - [ ] /admin/settings: edit SiteSettings with URL validation; public header/footer read from it — DEFERRED: frontend wiring/visual verification, per Christian. Backend interfaces are in BACKEND_HANDOFF.md.
 - [x] Tests: settings changes appear publicly, message status transitions — backend storage/status/settings tests pass; public UI wiring deferred.
 
 ## Phase 7: Hardening and handoff
 
-- [x] Security headers in next.config (CSP allowing Turnstile + imagedelivery.net, X-Frame-Options, Referrer-Policy) — verified locally; see acceptance results.
+- [x] Security headers in next.config (CSP allowing imagedelivery.net, X-Frame-Options, Referrer-Policy) — verified locally; see acceptance results.
 - [x] images.remotePatterns for imagedelivery.net — verified locally; see acceptance results.
 - [ ] Metadata: per-page title/description, per-event Open Graph image (og variant), sitemap.js, robots.js (block /admin) — DEFERRED: frontend wiring/visual verification, per Christian. Backend interfaces are in BACKEND_HANDOFF.md.
 - [ ] Friendly error states on every form and admin action — DEFERRED: frontend wiring/visual verification, per Christian. Backend interfaces are in BACKEND_HANDOFF.md.
@@ -109,7 +116,7 @@ Scope reconstructed from the agreement and implementation request; no original S
 - Confirm reconstructed SCOPE.md technical defaults; original sections were unavailable.
 - Production Neon remains unchanged; production migration/initial OWNER provisioning requires the separate release process. Local development/test databases are configured in ignored .env.local.
 - Cloudflare Images credentials, four variants and live upload/delivery/delete verified on 2026-09-30; deployment must receive those existing credentials.
-- Production Turnstile keys/domain configuration, deployment host/domain, initial OWNER credentials.
+- Deployment host/domain and activation of the prepared initial OWNER credentials.
 - Community copy and Instagram link supplied/adapted; still need client photos, contact/community-chat links, final copy/brand approval, privacy retention and attendee collection/visibility policy. See COPY_SOURCES.md.
 
 ## Change requests
@@ -153,7 +160,7 @@ Scope reconstructed from the agreement and implementation request; no original S
 | 10 | RSVP management and CSV | Backend queries/actions/export PASS; UI DEFERRED |
 | 11 | Contact storage/status/mailto | Backend PASS; UI/mailto DEFERRED |
 | 12 | Settings and public header/footer | Settings persistence/public query PASS; UI DEFERRED |
-| 13 | Live Cloudflare/Turnstile configuration | Images PASS; production Turnstile keys/domain still BLOCKED |
+| 13 | Live Cloudflare configuration | Images PASS; Turnstile removed at user request |
 | 14 | Shared rate limiter/trusted proxy | DB counter implementation/tests PASS; hosting header verification BLOCKED |
 | 15 | Headers/metadata/sitemap/robots | Config/handlers/helper/build PASS; per-page wiring and live HTTP DEFERRED |
 | 16 | Friendly form/admin errors | Backend safe result contract PASS; visible accessibility DEFERRED |

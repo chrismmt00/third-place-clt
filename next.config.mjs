@@ -5,12 +5,12 @@ const nextConfig = {
     const development = process.env.NODE_ENV !== "production";
     const csp = [
       "default-src 'self'",
-      `script-src 'self' 'unsafe-inline' ${development ? "'unsafe-eval' " : ""}https://challenges.cloudflare.com`,
+      `script-src 'self' 'unsafe-inline' ${development ? "'unsafe-eval' " : ""}`,
       "style-src 'self' 'unsafe-inline'",
       "img-src 'self' data: blob: https://imagedelivery.net",
       "font-src 'self'",
-      `connect-src 'self' https://challenges.cloudflare.com https://upload.imagedelivery.net${development ? " ws: wss:" : ""}`,
-      "frame-src https://challenges.cloudflare.com",
+      `connect-src 'self' https://upload.imagedelivery.net${development ? " ws: wss:" : ""}`,
+      "frame-src 'none'",
       "frame-ancestors 'none'", "object-src 'none'", "base-uri 'self'", "form-action 'self'",
     ].join("; ");
     return [{ source: "/:path*", headers: [

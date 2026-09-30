@@ -103,16 +103,13 @@ out of build-time prerendering. This keeps credentials/runtime data out of build
 and prevents stale event availability. Authenticated queries already read cookies.
 
 `submitRsvp` in src/app/actions/rsvp.js: eventId, firstName, lastName, email, phone,
-guestCount, note, consent, publicNameConsent, website (empty honeypot), and
-cf-turnstile-response. Public-name opt-in starts unchecked. Consent is required.
+guestCount, note, consent, publicNameConsent, website (empty honeypot). Public-name opt-in starts unchecked. Consent is required.
 Phone is optional when enabled and discarded otherwise. Counts include guests.
 Success contains no attendee personal data. Duplicate emails stay unique even
 after cancellation; direct the attendee to the organizer for changes.
 
-Turnstile widget must use action `rsvp` or `contact` respectively. Reset/refresh
-the widget after each attempted submission because tokens are single-use. Use
-the documented test sitekey only locally and real hostname-restricted keys in
-production. There is no production verification bypass.
+No CAPTCHA token is required. Turnstile was removed at the user’s request on
+September 30, 2026. Both public actions retain rate limits and honeypot validation.
 
 `manageRsvp`: id, eventId, operation cancel/delete. CSV link:
 `/api/admin/events/{id}/rsvps/export`. The route authenticates and escapes formulas.
@@ -120,8 +117,7 @@ production. There is no production verification bypass.
 ## Contact and settings
 
 `src/app/actions/contact.js`: submitContact, manageMessage, saveSettings.
-Contact expects name,email,subject,message,consent,website and
-cf-turnstile-response. Message operations: read/archive/delete. When an admin
+Contact expects name,email,subject,message,consent,website. Message operations: read/archive/delete. When an admin
 explicitly opens a message, POST manageMessage(read) and render the protected
 query result. GET/prefetch never marks a message read. Reply uses an encoded
 mailto URL, not email delivery.
@@ -136,7 +132,7 @@ contact data. For new events, omitted visibility fields inherit these defaults.
 Wire `eventMetadata(slug)` from src/lib/metadata.js into generateMetadata.
 Page titles/descriptions and root metadataBase remain frontend work. Sitemap and
 robots handlers are implemented; they need DATABASE_URL/NEXT_PUBLIC_SITE_URL at
-runtime. CSP permits Turnstile and Cloudflare image delivery/upload. Static Next
+runtime. CSP permits Cloudflare image delivery/upload; third-party frames are disabled. Static Next
 hydration currently needs unsafe-inline; a nonce policy would require coordinated
 dynamic page rendering. Do not introduce unsafe HTML rendering.
 

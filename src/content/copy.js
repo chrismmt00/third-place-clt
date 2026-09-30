@@ -56,8 +56,6 @@ export const copy = {
     filled: "This event just filled up.",
     limited: "Too many tries in a row.",
     limitedBody: "Please wait a few minutes, then try again.",
-    verify: "We couldn't verify you're a person.",
-    verifyBody: "Please complete the check below and send your RSVP again.",
     consent: "It's OK for Third Place CLT to keep my RSVP details to run this event.",
     emailHelp: "For the organizers. Your email won't appear on the public attendee list.",
     phoneHelp: "For the organizers. Your number won't appear on the event page.",

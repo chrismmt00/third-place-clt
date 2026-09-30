@@ -1,5 +1,21 @@
 # Decisions
 
+## 2026-09-30: Remove Turnstile and clean environment files
+
+The user explicitly requested disabling Turnstile. Remove the widget, token
+handling, verification service, challenge-specific copy, CSP allowances and
+production key requirements. Both public actions keep server validation,
+honeypots and persisted rate limits. This supersedes earlier Turnstile scope and
+launch requirements. Regression tests cover token-free success and rejection of
+honeypots/rate-limited submissions for both forms.
+
+Removed the obsolete widget keys from the private environment files and tracked
+example. Moved the existing development seed password from `.env` to `.env.local`
+without rotating it. Existing Neon, auth and Cloudflare credentials are preserved;
+local database overrides and the pending `.env.owner` handoff remain intact.
+The public origins are still localhost because no production domain has been
+provided. This change does not authorize production database writes or deployment.
+
 ## 2026-09-30: Public stock photography
 
 The user's public-image request authorizes the Home/About presentation changes.

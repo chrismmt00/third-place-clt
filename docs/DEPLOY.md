@@ -24,7 +24,7 @@ required before the production migration and initial owner provisioning.
   not a mailbox or public contact address. Share the password privately only
   after provisioning and deployment. The client replaces both credentials.
 - Still needed: explicit production-write approval, hosting target/domain, real
-  Turnstile widget keys for that domain, contact/chat details,
+  contact/chat details,
   privacy retention/provider review, and live browser/host-header verification.
 - Home/About photography now uses free Pexels stock at the user's request; client
   photos are optional replacements. Attribution and license records are in
@@ -40,10 +40,11 @@ and deployment. For a private complete release file, use
 `npm run production:check -- --env-file=.env.release`.
 This offline check does not load `.env.local`, access the database, or print secret
 values. It rejects missing settings, local/non-HTTPS origins, mismatched origins,
-test Turnstile keys, a database host mismatch, missing database TLS, and test/seed
+a database host mismatch, missing database TLS, and test/seed
 credentials left in the production runtime. It does not replace live verification.
-The current `.env` intentionally fails because it still has local origins, dummy
-Turnstile keys and the development seed password. Do not deploy it wholesale.
+The current `.env` still fails because its public origins are localhost until a
+production domain is supplied. Turnstile keys have been removed; the development
+seed password is now only in `.env.local`. Do not deploy local configuration wholesale.
 
 ### First production owner (only after explicit release approval)
 
@@ -116,8 +117,8 @@ seed arbitrary databases. TEST_DATABASE_URL never falls back to DATABASE_URL.
 - [ ] Cloudflare Images account ID/token and public account hash configured.
 - [ ] Create card/hero/og/thumb image variants in Cloudflare.
 - [ ] Verify real direct upload, attach, replace and delete; review orphan cleanup.
-- [ ] Create Turnstile widget for the actual domains. Replace both test keys.
-  Server checks hostname and action; production rejects documented dummy secrets.
+- [x] Turnstile removed at the user’s request (September 30, 2026). No widget keys
+  or challenge-provider configuration are needed. Honeypots and rate limits remain.
 - [ ] Set AUTH_URL and NEXT_PUBLIC_SITE_URL to the canonical HTTPS origin.
 - [ ] Configure the hosting proxy to overwrite x-forwarded-for; verify rate limits
   cannot be bypassed with a caller-supplied header.
