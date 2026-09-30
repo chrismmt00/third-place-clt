@@ -1,5 +1,25 @@
 # Decisions
 
+## 2026-09-30: One production environment file
+
+The user requested one env file, including the admin login, and confirmed that
+file will be used in production. `.env` retains the original production Neon,
+auth and Cloudflare values and now includes OWNER_NAME, OWNER_EMAIL and
+OWNER_TEMPORARY_PASSWORD. The separate `.env.owner` and `.env.local` files were
+removed after verifying the merge. Old local database/seed values are preserved
+as inactive comments in `.env`, without changing the active production connection.
+The tracked `.env.example` is only a blank configuration template.
+
+Tooling reads just `.env`, with explicit shell overrides for local work. The
+owner provisioning command reads its configuration and credentials from that
+same file and still requires the explicit production target/confirmed host.
+Environment credentials are provisioning inputs; changing them does not create
+or reset a database account. Production migration/account creation remains pending.
+Earlier decisions about separate env files are superseded by this request.
+The user supplied https://third-place-clt.vercel.app; AUTH_URL, NEXT_PUBLIC_SITE_URL
+and the existing NEXTAUTH_URL alias now use that canonical origin. The private
+file passes offline release validation, but Git does not synchronize it to Vercel.
+
 ## 2026-09-30: Dedicated project repository
 
 At the user's request, extracted this project's commit history from C:/Projects

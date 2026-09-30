@@ -19,12 +19,14 @@ required before the production migration and initial owner provisioning.
 - Read-only production Neon inspection found 0/6 application tables. Reviewed
   initial migration creates four enums, six tables, indexes and the RSVP foreign
   key; it does not drop/reset data. No production writes have been performed.
-- Temporary owner credentials are in ignored `.env.owner` (not active in
+- Temporary owner credentials are in ignored `.env` under `OWNER_NAME`, `OWNER_EMAIL`
+  and `OWNER_TEMPORARY_PASSWORD` (not active in
   production). The temporary email is a reserved `.invalid` login identifier,
   not a mailbox or public contact address. Share the password privately only
   after provisioning and deployment. The client replaces both credentials.
-- Still needed: explicit production-write approval, hosting target/domain, real
-  contact/chat details,
+- Production URL: https://third-place-clt.vercel.app (confirmed by the user).
+- Still needed: explicit production-write approval, Vercel project configuration
+  verification, contact/chat details,
   privacy retention/provider review, and live browser/host-header verification.
 - Home/About photography now uses free Pexels stock at the user's request; client
   photos are optional replacements. Attribution and license records are in
@@ -37,30 +39,32 @@ required before the production migration and initial owner provisioning.
 
 Run `npm run production:check` in the host's configured environment before build
 and deployment. For a private complete release file, use
-`npm run production:check -- --env-file=.env.release`.
-This offline check does not load `.env.local`, access the database, or print secret
+`npm run production:check -- --env-file=.env`.
+This offline check reads only the named file, does not access the database or print secret
 values. It rejects missing settings, local/non-HTTPS origins, mismatched origins,
 a database host mismatch, missing database TLS, and test/seed
 credentials left in the production runtime. It does not replace live verification.
-The current `.env` still fails because its public origins are localhost until a
-production domain is supplied. Turnstile keys have been removed; the development
-seed password is now only in `.env.local`. Do not deploy local configuration wholesale.
+The single `.env` now passes the offline production checks with the confirmed
+Vercel origin. Turnstile keys are removed. Development seed/database settings are
+inactive comments. The file remains ignored by Git: a Git push does not transfer
+these secrets to Vercel. Configure the corresponding production environment
+variables in the Vercel project and rebuild/redeploy to apply public build values.
 
 ### First production owner (only after explicit release approval)
 
 1. Supply the deployment domain, configure live secrets and review the migration.
 2. Apply the reviewed migration through the approved release process below.
-3. Run `npm run owner:provision -- --target=production --env-file=.env.release --credentials-file=.env.owner --confirm-host=CONFIRMED_PRODUCTION_HOST`.
+3. Run `npm run owner:provision -- --target=production --env-file=.env --confirm-host=CONFIRMED_PRODUCTION_HOST`.
    Use the actual hostname from the private production configuration. The command
    requires matching explicit/declared hosts and database TLS. It reads only the
-   named files, so local development overrides cannot change its target.
+   named file, so shell development overrides cannot change its target.
 4. This creates the first OWNER and missing settings singleton with the confirmed
    Instagram link. It never overwrites existing settings, resets a password,
    promotes another account, or adds a second owner. A matching still-temporary
    account makes a retry a no-op. Existing owners must use the Users page.
 5. Privately hand over the `/admin/login` URL and generated credentials; complete
-   the password and email changes described in ADMIN_GUIDE.md. Remove the local
-   temporary credential file after the handoff and initial credential replacement.
+   the password and email changes described in ADMIN_GUIDE.md. Remove only OWNER_TEMPORARY_PASSWORD from `.env` after the handoff and initial
+   credential replacement; keep the application configuration file.
 
 Development migration/seed guards remain unchanged; this explicit release-only
 provisioning procedure is separate. No automatic emails are sent.
@@ -73,26 +77,23 @@ provisioning procedure is separate. No automatic emails are sent.
 - [ ] `npm ci` (postinstall generates Prisma's JavaScript client).
 - [ ] On a new checkout, copy `.env.example` to `.env`; fill values locally, never commit secrets. Preserve existing configured credentials.
   `AUTH_SECRET` can be generated with `node -e "console.log(require('node:crypto').randomBytes(32).toString('base64url'))"` in your own terminal.
-- [ ] Set DATABASE_URL in ignored `.env.local` to local PostgreSQL or an identified development Neon branch, never production. Set TEST_DATABASE_URL to a separate test database.
+- [ ] Set DATABASE_URL as an explicit shell override to local PostgreSQL or an identified development Neon branch, never production. Set TEST_DATABASE_URL in that shell to a separate test database.
   For remote mutations also set NONPRODUCTION_DATABASE_HOST and
   PRODUCTION_DATABASE_HOST. Pooled and direct Neon endpoints normalize for checks.
-- [ ] Tooling loads shell values first, then `.env.local`, then `.env`. Prisma,
-  seed and Vitest share this order. Vitest deliberately reads `.env.local` even
-  in test mode; only TEST_DATABASE_URL enables integration tests. Set an empty
-  shell TEST_DATABASE_URL for unit-only checks. Never deploy `.env.local`.
+- [ ] Tooling loads explicit shell values first, then the single `.env`. Prisma,
+  seed and Vitest share this order. Only an explicit TEST_DATABASE_URL enables
+  integration tests. The production `.env` does not enable integration tests.
 - [ ] `npm run db:validate` then `npm run db:generate`.
 - [ ] `npm run db:migrate` (guarded migration deploy, nonproduction only).
 - [ ] Set SEED_ADMIN_EMAIL/SEED_ADMIN_PASSWORD privately, then `npm run db:seed`.
   Run twice to confirm idempotency; existing users/passwords/settings are preserved.
 - [ ] `npm run verify` and `npm run build`.
 
-Current local setup (2026-09-28): PostgreSQL on localhost:5432 has separate
-third_place_clt_dev and third_place_clt_test databases. The ignored `.env.local`
-selects them, overriding the production Neon URL retained in `.env`. The local
-fixture OWNER is owner@third-place-clt.test; its initial password uses the existing
-private SEED_ADMIN_PASSWORD and must be changed on first login. Production owner
-details remain a release input. Do not seed the integration database with real
-attendees or client accounts.
+Local PostgreSQL still has separate third_place_clt_dev and third_place_clt_test
+databases. Their previous settings are preserved as commented reference lines in
+the single private `.env`. They do not override the active production Neon URL.
+Use those settings only as explicit shell overrides for local development/tests.
+Development migration and seed guards reject the production database.
 
 Disposable local PostgreSQL example (PowerShell; Docker must be running):
 
@@ -119,7 +120,8 @@ seed arbitrary databases. TEST_DATABASE_URL never falls back to DATABASE_URL.
 - [ ] Verify real direct upload, attach, replace and delete; review orphan cleanup.
 - [x] Turnstile removed at the user’s request (September 30, 2026). No widget keys
   or challenge-provider configuration are needed. Honeypots and rate limits remain.
-- [ ] Set AUTH_URL and NEXT_PUBLIC_SITE_URL to the canonical HTTPS origin.
+- [x] Set AUTH_URL and NEXT_PUBLIC_SITE_URL in local `.env` to the confirmed
+  https://third-place-clt.vercel.app origin; verify the same values in Vercel.
 - [ ] Configure the hosting proxy to overwrite x-forwarded-for; verify rate limits
   cannot be bypassed with a caller-supplied header.
 
@@ -144,4 +146,5 @@ seed arbitrary databases. TEST_DATABASE_URL never falls back to DATABASE_URL.
 - [ ] Handoff secure account access and ADMIN_GUIDE.md; record launch date and
   the agreement's 14-day bug-support window.
 
-No deployment target was supplied, so no deployment was performed.
+The user supplied the Vercel production URL. This configuration change has not
+uploaded secrets, initialized the production database or triggered a deployment.

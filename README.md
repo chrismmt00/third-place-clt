@@ -15,9 +15,10 @@ Built with Next.js, React, PostgreSQL/Prisma, Auth.js and Cloudflare Images.
 Use Node.js 24 LTS and a dedicated local PostgreSQL database.
 
 1. Run `npm ci`.
-2. Copy `.env.example` to `.env` and configure shared credentials privately.
-3. Set `DATABASE_URL` and a separate `TEST_DATABASE_URL` in `.env.local`, along with
-   local seed credentials. Never point development migrations or tests at production.
+2. Copy `.env.example` to `.env` and configure credentials privately. The existing `.env` is for production.
+3. Set `DATABASE_URL` and a separate `TEST_DATABASE_URL` as explicit shell overrides,
+   along with local seed credentials. Local reference values are inactive comments
+   in `.env`; there is no `.env.local`. Never run local development against production.
 4. Run `npm run db:migrate` and, if a local fixture owner is needed, `npm run db:seed`.
 5. Run `npm run dev`.
 
@@ -36,5 +37,5 @@ configuration and the explicit first-owner provisioning procedure.
 - [Progress](docs/PROGRESS.md)
 - [Photo sources and licenses](docs/IMAGE_SOURCES.md)
 
-Private `.env` files, credentials, the client agreement and design archive are
+The private `.env`, credentials, the client agreement and design archive are
 ignored and must not be committed.

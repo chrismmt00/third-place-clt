@@ -9,7 +9,7 @@ function files(path) {
   });
 }
 const visited = new Set();
-const forbidden = /\b(CLOUDFLARE_IMAGES_TOKEN|CLOUDFLARE_STREAM_TOKEN|AUTH_SECRET|DATABASE_URL)\b/;
+const forbidden = /\b(CLOUDFLARE_IMAGES_TOKEN|CLOUDFLARE_STREAM_TOKEN|AUTH_SECRET|DATABASE_URL|OWNER_TEMPORARY_PASSWORD|SEED_ADMIN_PASSWORD)\b/;
 function inspect(path) {
   if (visited.has(path)) return;
   visited.add(path);

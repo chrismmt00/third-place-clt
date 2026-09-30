@@ -2,6 +2,18 @@
 
 ## Status
 
+2026-09-30 single-env follow-up: `.env` is the sole private production config and
+owner credential handoff. Production connection/secrets were preserved; local
+reference values are commented out. `.env.local` and `.env.owner` were removed.
+Owner provisioning now consumes `.env` without a separate credentials file.
+AUTH_URL, NEXT_PUBLIC_SITE_URL and the legacy NEXTAUTH_URL alias now use the
+confirmed https://third-place-clt.vercel.app origin. Offline production checks
+pass. Vercel secret synchronization and production account provisioning remain
+unverified; changing the local file does not perform either operation.
+Validation: 52 tests pass using explicit local-only shell overrides; the production
+database mutation guard rejects `.env`'s target. Lint, Prisma, secret boundaries
+and the production build with the confirmed Vercel origin pass.
+
 2026-09-30 Turnstile removal: disabled throughout RSVP/contact UI and actions,
 removed private/example keys and challenge CSP allowances, updated privacy copy
 and release checks. The existing seed password now lives only in `.env.local`.
@@ -12,7 +24,7 @@ NEXT_PUBLIC_SITE_URL still using localhost. No production database writes.
 2026-09-30 production preparation is in progress: account email/name changes and
 guarded first-owner provisioning implemented; private credentials prepared but not
 activated in production. The existing frontend is now part of the release checkpoint.
-Production migration/account approval and domain/hosting details are pending.
+Production migration/account approval and Vercel configuration verification are pending.
 See DEPLOY.md for the current launch blockers and exact handoff procedure.
 
 2026-09-30 public-image follow-up: user requested free photography on the public

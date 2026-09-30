@@ -13,7 +13,7 @@ try {
     for (const issue of issues) console.error(`- ${issue}`);
     process.exitCode = 1;
   } else {
-    console.log("Offline production environment checks passed. Live host, database, widget, and account verification remain required.");
+    console.log("Offline production environment checks passed. Live host, database and account verification remain required.");
   }
 } catch {
   console.error("Could not check configuration. Use production:check with the host environment or --env-file=<private file>.");

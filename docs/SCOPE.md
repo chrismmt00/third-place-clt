@@ -141,9 +141,11 @@ PROGRESS, DECISIONS, DEPLOY, ADMIN_GUIDE and design reference files.
 ## 8. Environment
 
 DATABASE_URL; TEST_DATABASE_URL; NONPRODUCTION_DATABASE_HOST;
-PRODUCTION_DATABASE_HOST; AUTH_SECRET; AUTH_URL; SEED_ADMIN_EMAIL;
-SEED_ADMIN_PASSWORD; CLOUDFLARE_IMAGES_ACCOUNT_ID; CLOUDFLARE_IMAGES_TOKEN;
+PRODUCTION_DATABASE_HOST; AUTH_SECRET; AUTH_URL; OWNER_NAME; OWNER_EMAIL;
+OWNER_TEMPORARY_PASSWORD; CLOUDFLARE_IMAGES_ACCOUNT_ID; CLOUDFLARE_IMAGES_TOKEN;
 CLOUDFLARE_IMAGES_ACCOUNT_HASH; NEXT_PUBLIC_SITE_URL. Never populate secrets in tracked files.
+Use one private production .env. Development/test URLs and seed credentials use
+explicit shell overrides; their old values are inactive comments in .env.
 Commit only .env.example. Nonproduction/production host declarations support
 fail-closed mutation safeguards. Deployment must identify trusted proxy IP headers.
 
