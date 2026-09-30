@@ -8,6 +8,15 @@ activated in production. The existing frontend is now part of the release checkp
 Production migration/account approval and domain/hosting details are pending.
 See DEPLOY.md for the current launch blockers and exact handoff procedure.
 
+2026-09-30 public-image follow-up: user requested free photography on the public
+pages. Replaced all three Home/About photo placeholders with licensed Pexels
+images, local delivery, descriptive alt text and stock-photo credits. Source and
+license records are in IMAGE_SOURCES.md. Event-specific images remain managed by
+the event editor.
+Validation: inspected all three downloaded images; lint, Prisma validation,
+47 tests, client-secret/JavaScript gates and production build pass. Browser layout
+review was not run in this follow-up.
+
 Christian confirmed concurrent frontend work. This task now owns backend only; page wiring and visual QA are deferred to that task.
 
 Reconfirmed 2026-09-28: supplied Neon is production and must remain unchanged;

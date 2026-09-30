@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { ArrowRight, Calendar, ChevronRight, MessageCircle, MessageSquareHeart } from "lucide-react";
 import { about, site } from "@/content/site";
-import { PhotoPlaceholder } from "@/components/ui/bits";
+import { CommunityPhoto } from "@/components/site/CommunityPhoto";
+import { photos } from "@/content/photos";
 import { loadSettings } from "../site-data";
 
 export const metadata = {
@@ -33,7 +34,7 @@ export default async function AboutPage() {
             </p>
           ))}
         </div>
-        <PhotoPlaceholder alt="[CLIENT PHOTO] People at a Third Place meetup" label="photo · people cut out, faces not shown" className="aspect-[4/3] rounded-lg lg:rounded-[20px]" />
+        <CommunityPhoto photo={photos.together} eager imageClassName="aspect-[4/3]" />
       </section>
 
       {/* What a third place is */}

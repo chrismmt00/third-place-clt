@@ -1,5 +1,15 @@
 # Decisions
 
+## 2026-09-30: Public stock photography
+
+The user's public-image request authorizes the Home/About presentation changes.
+Use three Pexels photographs with conversational scenes, warm wood and natural
+light. Store downloaded assets locally and render through Next Image with the
+existing aspect ratios, eager hero loading and lazy secondary loading. Keep
+visible stock-photo credits to avoid implying pictured people are Third Place
+members. No event records, production data or security policy changes are needed.
+Source URLs and license notes are recorded in IMAGE_SOURCES.md.
+
 ## 2026-09-25: Reconstructed specification
 
 The user identified the agreement PDF when asked for the missing SCOPE.md. Reconstructed SCOPE.md from that source and the pasted implementation request. Model fields, folder structure, login thresholds and checklist are proposed technical defaults, not recovered original text. Explicit conservative defaults: attendee visibility off, optional phone off, zero guests; cancelled events remain public; DST ambiguity requires a choice. sessionVersion and persisted publicName are added for revocation and privacy. Confirm defaults before launch.

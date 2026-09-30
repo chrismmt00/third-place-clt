@@ -4,7 +4,8 @@ import { copy } from "@/content/copy";
 import { home, site } from "@/content/site";
 import { listPublicEvents } from "@/lib/public-events";
 import { Button } from "@/components/ui/Button";
-import { PhotoPlaceholder } from "@/components/ui/bits";
+import { CommunityPhoto } from "@/components/site/CommunityPhoto";
+import { photos } from "@/content/photos";
 import { EventGrid, NoEvents } from "@/components/site/EventLists";
 import { loadSettings, socialsFrom, withCardState } from "./site-data";
 
@@ -34,10 +35,10 @@ export default async function HomePage() {
             )}
           </div>
         </div>
-        <PhotoPlaceholder
-          alt="[CLIENT PHOTO] Collage of people and props from a Third Place meetup"
-          label="hero collage · people, props, board games"
-          className="aspect-[4/3] rounded-lg lg:aspect-[5/4] lg:rounded-[20px]"
+        <CommunityPhoto
+          photo={photos.conversation}
+          eager
+          imageClassName="aspect-[4/3] lg:aspect-[5/4]"
         />
       </section>
 
@@ -69,11 +70,10 @@ export default async function HomePage() {
       {/* What's a third place? */}
       <section aria-labelledby="home-what" className="bg-accent-soft">
         <div className="mx-auto grid max-w-content gap-4 px-4 py-12 md:px-8 lg:grid-cols-2 lg:items-center lg:gap-16 lg:px-12 lg:py-[88px]">
-          <PhotoPlaceholder
-            light
-            alt="[CLIENT PHOTO] Small groups talking at a Third Place meetup"
-            label="photo · groups of three mid-conversation"
-            className="hidden aspect-[4/3] rounded-[20px] lg:flex"
+          <CommunityPhoto
+            photo={photos.coffee}
+            className="hidden lg:block"
+            imageClassName="aspect-[4/3]"
           />
           <div className="flex flex-col gap-4 lg:gap-5">
             <h2 id="home-what" className="m-0 font-display text-[30px] leading-9 font-extrabold lg:text-3xl lg:tracking-[-0.02em]">

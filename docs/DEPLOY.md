@@ -24,8 +24,11 @@ required before the production migration and initial owner provisioning.
   not a mailbox or public contact address. Share the password privately only
   after provisioning and deployment. The client replaces both credentials.
 - Still needed: explicit production-write approval, hosting target/domain, real
-  Turnstile widget keys for that domain, contact/chat details, client photos,
+  Turnstile widget keys for that domain, contact/chat details,
   privacy retention/provider review, and live browser/host-header verification.
+- Home/About photography now uses free Pexels stock at the user's request; client
+  photos are optional replacements. Attribution and license records are in
+  IMAGE_SOURCES.md. These photos do not depict actual Third Place events.
 - Automatic approval review blocked starting the temporary local HTTP server
   with only "blocked by policy" detail. Browser login/reset flows are unverified;
   direct action/auth and local database tests pass.
