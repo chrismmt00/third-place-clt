@@ -1,8 +1,8 @@
 # Third Place CLT administrator guide
 
-This describes the intended connected admin workflow. The backend is implemented;
-frontend controls must be wired and checked before this guide is handed to the
-client as a live-site guide. No email is sent automatically by this website.
+The admin interface is implemented. Production provisioning, deployment and live
+browser verification must be completed before this is handed over as a live-site
+guide. No email is sent automatically by this website.
 
 ## Sign in and passwords
 
@@ -10,6 +10,14 @@ Visit /admin/login. Use the administrator email and temporary password supplied
 securely by the owner. On first login, change your password on Account. Use at
 least 12 characters; after changing it, sign in again. Repeated failed attempts
 temporarily lock sign-in. Ask an owner to reset a forgotten password.
+
+If your initial login uses a temporary email, keep using that email until you
+change it under Account. After changing your temporary password and signing in
+again, open Account → Name and login email. Enter your name, actual email and
+current password, then save. Sign in again with the updated email. This ends
+existing sessions and does not change the public contact address in Settings.
+The login email is an account identifier; this site does not email a verification
+link or provide automatic password recovery. Keep your login details securely.
 
 Owners can add administrators, change OWNER/EDITOR roles, reset temporary
 passwords and remove administrators. Editors can manage events, RSVPs, messages

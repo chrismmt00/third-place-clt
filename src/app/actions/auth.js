@@ -44,6 +44,27 @@ export async function changePassword(_previous, formData) {
   } catch (error) { return actionError(error); }
 }
 
+export async function updateAccount(_previous, formData) {
+  try {
+    const user = await requireAdmin();
+    const data = z.object({
+      name: z.string().trim().min(1, "Enter your name.").max(100),
+      email: emailSchema,
+      currentPassword: z.string().min(1, "Enter your current password.").max(256),
+    }).parse(Object.fromEntries(formData));
+    if (!(await compare(data.currentPassword, user.passwordHash))) throw new UserError("The current password is incorrect.");
+    const changed = await db.adminUser.updateMany({
+      where: { id: user.id, sessionVersion: user.sessionVersion, passwordHash: user.passwordHash },
+      data: { name: data.name, email: data.email, sessionVersion: { increment: 1 } },
+    });
+    if (!changed.count) throw new UserError("Your account changed. Please sign in again.", "UNAUTHENTICATED", 401);
+    return { ok: true, message: "Account updated. Sign in again using your updated email and current password.", signInRequired: true };
+  } catch (error) {
+    if (error.code === "P2002") return { ok: false, error: "That email cannot be used. Please choose another email." };
+    return actionError(error);
+  }
+}
+
 export async function addAdmin(_previous, formData) {
   try {
     await requireOwner();

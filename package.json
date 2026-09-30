@@ -13,6 +13,8 @@
     "db:migrate": "node scripts/database.js migrate",
     "db:seed": "node scripts/database.js seed",
     "verify": "node scripts/verify.js",
+    "production:check": "node scripts/production-check.js",
+    "owner:provision": "node scripts/provision-owner.js",
     "postinstall": "prisma generate"
   },
   "dependencies": {

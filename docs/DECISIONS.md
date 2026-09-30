@@ -75,3 +75,30 @@ COPY_SOURCES.md. Historical Instagram logistics do not override newer meetup
 drafts or event-specific records. Unverified operational promises were removed;
 privacy stays a labeled draft until retention and provider/contact decisions are
 supplied. No production settings, database records or social accounts were changed.
+
+## 2026-09-30: Production preparation and owner handoff
+
+Christian requested production readiness and authorized a generated temporary
+login that the client can replace. Added Account name/email changes requiring
+the current password, preserving roles and revoking prior sessions. Forced initial
+password change remains required before profile changes. No verification/recovery
+email feature was added; temporary email uses the reserved .invalid domain.
+
+Added offline production environment validation and a separately guarded,
+create-only first-owner release command. Existing nonproduction-only migration
+and seed guards are unchanged. Production writes remain pending Christian's
+answer to the explicit approval question, honoring his previous instruction to
+leave Neon unchanged. Production inspection was read-only and found no app tables.
+
+Using the existing Cloudflare token, created only the four missing variants and
+verified direct upload, metadata, delivery and cleanup with a generated disposable
+image. The first image check failed; a fresh generated PNG
+passed. Both owned fixtures were cleaned up. No new token was created and no
+existing variant or client image was changed. Current domain/Turnstile configuration
+is still local/test and is correctly rejected by production:check.
+
+The existing untracked frontend is included in the release checkpoint so a fresh
+checkout contains the app, while retaining its design and flows. The Account
+addition is necessary for the newly requested email handoff. Browser smoke tests
+could not run because automatic approval review rejected the temporary loopback
+server launch as blocked by policy. Production readiness is not a launch claim.

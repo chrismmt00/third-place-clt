@@ -1,0 +1,156 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens. Swapping the brand means editing these variables and the
+ * two next/font imports in app/layout.js. Tailwind utilities (bg-primary,
+ * text-muted, rounded-md, shadow-sm, …) are generated from this block.
+ */
+@theme {
+  --color-*: initial;
+  --color-bg: #FBF7F0;
+  --color-surface: #FFFFFF;
+  --color-surface-2: #F3ECE1;
+  --color-ink: #1F1B16;
+  --color-muted: #5E554A;
+  --color-border: #E6DDD0;
+  --color-border-strong: #8C8173;
+  --color-primary: #B4492B;
+  --color-primary-hover: #963A20;
+  --color-primary-soft: #F7E4DB;
+  --color-on-primary: #FFFFFF;
+  --color-accent: #2F5D50;
+  --color-accent-soft: #DFEBE5;
+  --color-on-accent: #FFFFFF;
+  --color-success: #2E6B3A;
+  --color-success-soft: #E2EFE3;
+  --color-warning: #8A5300;
+  --color-warning-soft: #FBEBCD;
+  --color-danger: #A52A2A;
+  --color-danger-hover: #86201F;
+  --color-danger-soft: #F9E1DE;
+  --color-focus: #1F1B16;
+  --color-scrim: rgb(31 27 22 / 0.55);
+
+  --font-*: initial;
+  --font-display: var(--font-bricolage), Georgia, serif;
+  --font-body: var(--font-figtree), system-ui, sans-serif;
+  --font-mono: ui-monospace, Menlo, monospace;
+
+  --text-*: initial;
+  --text-xs: 12px;
+  --text-xs--line-height: 16px;
+  --text-sm: 14px;
+  --text-sm--line-height: 20px;
+  --text-base: 16px;
+  --text-base--line-height: 24px;
+  --text-lg: 18px;
+  --text-lg--line-height: 28px;
+  --text-xl: 22px;
+  --text-xl--line-height: 28px;
+  --text-2xl: 30px;
+  --text-2xl--line-height: 36px;
+  --text-3xl: 40px;
+  --text-3xl--line-height: 44px;
+  --text-4xl: 52px;
+  --text-4xl--line-height: 56px;
+
+  --breakpoint-*: initial;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1440px;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+
+  --shadow-sm: 0 1px 2px rgb(60 38 20 / 0.06), 0 2px 6px rgb(60 38 20 / 0.05);
+  --shadow-md: 0 12px 30px -12px rgb(60 38 20 / 0.25);
+  --shadow-lg: 0 24px 60px -20px rgb(60 38 20 / 0.35);
+  --shadow-bar: 0 -8px 20px -12px rgb(60 38 20 / 0.25);
+
+  --container-content: 1280px;
+  --container-prose: 680px;
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+  }
+
+  a {
+    color: var(--color-primary);
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1.5px;
+  }
+
+  a:hover {
+    color: var(--color-primary-hover);
+  }
+
+  /* Fallback ring for anything that doesn't opt into the halo below. */
+  :focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  input[type="checkbox"],
+  input[type="radio"] {
+    accent-color: var(--color-primary);
+  }
+}
+
+/* Two-ring focus halo: 2px of the background, then 2px of --color-focus. */
+@utility focus-ring {
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--color-bg), 0 0 0 4px var(--color-focus);
+  }
+}
+
+/* Same halo for controls that sit on a white surface (fields, cards). */
+@utility focus-ring-surface {
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-focus);
+  }
+}
+
+/* Inputs show the halo on any focus, not just keyboard focus. */
+@utility field-focus {
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-focus);
+  }
+  &:focus:not([aria-invalid="true"]) {
+    border-color: var(--color-ink);
+  }
+}
+
+/* Striped stand-in for a photo the client hasn't supplied yet. */
+@utility photo-placeholder {
+  background: repeating-linear-gradient(
+    135deg,
+    var(--color-surface-2) 0 12px,
+    var(--color-border) 12px 13px
+  );
+}
+
+@utility photo-placeholder-light {
+  background: repeating-linear-gradient(
+    135deg,
+    var(--color-surface) 0 14px,
+    var(--color-border) 14px 15px
+  );
+}

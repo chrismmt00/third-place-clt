@@ -2,6 +2,12 @@
 
 ## Status
 
+2026-09-30 production preparation is in progress: account email/name changes and
+guarded first-owner provisioning implemented; private credentials prepared but not
+activated in production. The existing frontend is now part of the release checkpoint.
+Production migration/account approval and domain/hosting details are pending.
+See DEPLOY.md for the current launch blockers and exact handoff procedure.
+
 Christian confirmed concurrent frontend work. This task now owns backend only; page wiring and visual QA are deferred to that task.
 
 Reconfirmed 2026-09-28: supplied Neon is production and must remain unchanged;
@@ -93,7 +99,7 @@ Scope reconstructed from the agreement and implementation request; no original S
 
 - Confirm reconstructed SCOPE.md technical defaults; original sections were unavailable.
 - Production Neon remains unchanged; production migration/initial OWNER provisioning requires the separate release process. Local development/test databases are configured in ignored .env.local.
-- Cloudflare Images credentials/account hash are already configured locally; confirm card/hero/og/thumb variants and live image operations.
+- Cloudflare Images credentials, four variants and live upload/delivery/delete verified on 2026-09-30; deployment must receive those existing credentials.
 - Production Turnstile keys/domain configuration, deployment host/domain, initial OWNER credentials.
 - Community copy and Instagram link supplied/adapted; still need client photos, contact/community-chat links, final copy/brand approval, privacy retention and attendee collection/visibility policy. See COPY_SOURCES.md.
 
@@ -102,6 +108,8 @@ Scope reconstructed from the agreement and implementation request; no original S
 - Design handoff mentions waitlist, calendar/confirmation email, emailing attendees and galleries. Parked; not implemented.
 
 ## Phase checks
+
+- 2026-09-30 readiness: 47 tests PASS (including local owner provisioning and RSVP concurrency); Prisma validation, lint, secret boundary (38 modules) and production build PASS. Production config check correctly FAILS on localhost origins/test Turnstile keys/seed password. Production schema read-only audit: 0/6 tables. First-owner credentials prepared, pending production approval and deployment. Browser server launch rejected by automatic approval review; no workaround attempted.
 
 - 2026-09-28 client-source copy pass: Instagram introductions and Are.na drafts reviewed; Home/About/Contact and shared event/RSVP/error copy updated, Events/SEO copy prepared for frontend wiring. Source/claim review, Prisma validation, ESLint, 35 tests (including local PostgreSQL integration), client secret boundary (37 modules), tracked-TypeScript check and production build PASS. No new copy-only tests added. Privacy is a labeled client-review draft; no page wiring or production data changed.
 
@@ -128,7 +136,7 @@ Scope reconstructed from the agreement and implementation request; no original S
 | 2 | Public statuses and draft/missing 404 | Backend filtering PASS; actual page 404 DEFERRED |
 | 3 | Fresh admin authorization and owner controls | Backend PASS; frontend data loaders must be wired |
 | 4 | Lockout, forced reset, session invalidation | Backend PASS; browser flows DEFERRED |
-| 5 | Event lifecycle and images | Lifecycle PASS; existing Images credentials recognized; live operations/variants unverified |
+| 5 | Event lifecycle and images | Lifecycle tests PASS; live Images upload/ownership/four variants/deletion PASS; browser event editing unverified |
 | 6 | Eastern DST boundary cases | PASS, including both Nov 1 01:30 occurrences and spring gap |
 | 7 | RSVP validation/duplicates/deadlines/guests | PASS |
 | 8 | Disposable database overbooking test | PASS: 20 parallel submissions, exactly 5 accepted |
@@ -136,7 +144,7 @@ Scope reconstructed from the agreement and implementation request; no original S
 | 10 | RSVP management and CSV | Backend queries/actions/export PASS; UI DEFERRED |
 | 11 | Contact storage/status/mailto | Backend PASS; UI/mailto DEFERRED |
 | 12 | Settings and public header/footer | Settings persistence/public query PASS; UI DEFERRED |
-| 13 | Live Cloudflare/Turnstile configuration | Images credential names corrected; production Turnstile/domain and live checks still pending |
+| 13 | Live Cloudflare/Turnstile configuration | Images PASS; production Turnstile keys/domain still BLOCKED |
 | 14 | Shared rate limiter/trusted proxy | DB counter implementation/tests PASS; hosting header verification BLOCKED |
 | 15 | Headers/metadata/sitemap/robots | Config/handlers/helper/build PASS; per-page wiring and live HTTP DEFERRED |
 | 16 | Friendly form/admin errors | Backend safe result contract PASS; visible accessibility DEFERRED |

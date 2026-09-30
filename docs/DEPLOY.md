@@ -1,7 +1,65 @@
 # Deployment checklist
 
-Backend preparation only. Frontend integration and client launch approval remain
-outstanding. The development loop never applies migrations or seeds to production.
+Production release preparation. The admin/public interface now exists locally;
+live launch verification and client configuration remain outstanding. Development
+migration/seed commands still reject production. An explicit release approval is
+required before the production migration and initial owner provisioning.
+
+## September 30 readiness checkpoint
+
+- Local validation, lint, 47 tests (including local owner provisioning and RSVP
+  concurrency), client secret boundaries and production build pass.
+- Account supports changing the login name/email after the mandatory initial
+  password change, with current-password confirmation and session revocation.
+- Existing Cloudflare credentials verified. Created only missing variants:
+  card 960×600 cover, hero 1600×1200 scale-down, og 1200×630 cover, thumb 320×200
+  cover. EXIF metadata is stripped; variants do not bypass signed-image access.
+- Live direct image upload, ownership metadata, all four delivery variants and
+  owned test-image deletion passed. No real client images were altered.
+- Read-only production Neon inspection found 0/6 application tables. Reviewed
+  initial migration creates four enums, six tables, indexes and the RSVP foreign
+  key; it does not drop/reset data. No production writes have been performed.
+- Temporary owner credentials are in ignored `.env.owner` (not active in
+  production). The temporary email is a reserved `.invalid` login identifier,
+  not a mailbox or public contact address. Share the password privately only
+  after provisioning and deployment. The client replaces both credentials.
+- Still needed: explicit production-write approval, hosting target/domain, real
+  Turnstile widget keys for that domain, contact/chat details, client photos,
+  privacy retention/provider review, and live browser/host-header verification.
+- Automatic approval review blocked starting the temporary local HTTP server
+  with only "blocked by policy" detail. Browser login/reset flows are unverified;
+  direct action/auth and local database tests pass.
+
+### Release environment check
+
+Run `npm run production:check` in the host's configured environment before build
+and deployment. For a private complete release file, use
+`npm run production:check -- --env-file=.env.release`.
+This offline check does not load `.env.local`, access the database, or print secret
+values. It rejects missing settings, local/non-HTTPS origins, mismatched origins,
+test Turnstile keys, a database host mismatch, missing database TLS, and test/seed
+credentials left in the production runtime. It does not replace live verification.
+The current `.env` intentionally fails because it still has local origins, dummy
+Turnstile keys and the development seed password. Do not deploy it wholesale.
+
+### First production owner (only after explicit release approval)
+
+1. Supply the deployment domain, configure live secrets and review the migration.
+2. Apply the reviewed migration through the approved release process below.
+3. Run `npm run owner:provision -- --target=production --env-file=.env.release --credentials-file=.env.owner --confirm-host=CONFIRMED_PRODUCTION_HOST`.
+   Use the actual hostname from the private production configuration. The command
+   requires matching explicit/declared hosts and database TLS. It reads only the
+   named files, so local development overrides cannot change its target.
+4. This creates the first OWNER and missing settings singleton with the confirmed
+   Instagram link. It never overwrites existing settings, resets a password,
+   promotes another account, or adds a second owner. A matching still-temporary
+   account makes a retry a no-op. Existing owners must use the Users page.
+5. Privately hand over the `/admin/login` URL and generated credentials; complete
+   the password and email changes described in ADMIN_GUIDE.md. Remove the local
+   temporary credential file after the handoff and initial credential replacement.
+
+Development migration/seed guards remain unchanged; this explicit release-only
+provisioning procedure is separate. No automatic emails are sent.
 
 ## Local development and test database
 
