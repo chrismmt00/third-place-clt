@@ -40,3 +40,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 !.env.example
+
+# Private client source documents; keep outside source control.
+/Third_Place_CLT_Website_Development_Agreement.pdf
+/Design form questions-handoff.zip

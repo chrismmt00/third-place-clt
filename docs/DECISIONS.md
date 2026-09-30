@@ -1,5 +1,17 @@
 # Decisions
 
+## 2026-09-30: Dedicated project repository
+
+At the user's request, extracted this project's commit history from C:/Projects
+into a standalone repository at C:/Projects/third-place-clt. Its main branch uses
+origin https://github.com/chrismmt00/third-place-clt.git. The parent repository and
+its remote are unchanged. Earlier instructions describing the parent Git boundary
+are historical and superseded by this dedicated project repository.
+
+VS Code workspace settings disable opening parent repositories. Private env files
+and the client agreement/design archive are ignored. Open this project folder in
+VS Code to use this repository's source control and main upstream.
+
 ## 2026-09-30: Remove Turnstile and clean environment files
 
 The user explicitly requested disabling Turnstile. Remove the widget, token
