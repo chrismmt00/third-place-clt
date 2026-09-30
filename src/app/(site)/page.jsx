@@ -2,16 +2,15 @@ import Link from "next/link";
 import { ArrowRight, MessageCircle } from "lucide-react";
 import { copy } from "@/content/copy";
 import { home, site } from "@/content/site";
-import { listPublicEvents } from "@/lib/public-events";
 import { Button } from "@/components/ui/Button";
 import { CommunityPhoto } from "@/components/site/CommunityPhoto";
 import { photos } from "@/content/photos";
-import { EventGrid, NoEvents } from "@/components/site/EventLists";
-import { loadSettings, socialsFrom, withCardState } from "./site-data";
+import { EventGrid, EventsUnavailable, NoEvents } from "@/components/site/EventLists";
+import { loadSettings, socialsFrom, loadEventListing } from "./site-data";
 
 export default async function HomePage() {
-  const [settings, events] = await Promise.all([loadSettings(), listPublicEvents({ limit: 3 })]);
-  const next = await withCardState(events);
+  const [settings, listing] = await Promise.all([loadSettings(), loadEventListing({ limit: 3 })]);
+  const next = listing.items;
   const chatUrl = settings.chatUrl;
 
   return (
@@ -55,7 +54,7 @@ export default async function HomePage() {
             </Link>
           )}
         </div>
-        {next.length > 0 ? (
+        {!listing.available ? <EventsUnavailable /> : next.length > 0 ? (
           <>
             <EventGrid items={next} />
             <Button href="/events" variant="secondary" size="xl" iconRight={ArrowRight} className="lg:hidden">

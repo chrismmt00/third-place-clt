@@ -3,6 +3,17 @@ import { CalendarHeart, MessageCircle } from "lucide-react";
 import { dateBlock } from "@/lib/format";
 import { Button } from "@/components/ui/Button";
 import { EventCard } from "./EventCard";
+import { site } from "@/content/site";
+
+export function EventsUnavailable({ headingLevel = 3 }) {
+  return (
+    <NoEvents title="Event listings are temporarily unavailable" body="Please check back soon. You can also find meetup updates on Instagram." headingLevel={headingLevel}>
+      <a href={site.instagramUrl} className="flex min-h-11 items-center text-base font-semibold underline focus-ring">
+        Visit Third Place on Instagram
+      </a>
+    </NoEvents>
+  );
+}
 
 /** 1 column under 768, 2 up to 1024, 3 above. items: [{ event, state }] */
 export function EventGrid({ items, headingLevel = 3 }) {

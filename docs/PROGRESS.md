@@ -2,6 +2,15 @@
 
 ## Status
 
+2026-09-30 production homepage repair: the live root returned HTTP 500; the
+configured production Neon database was reachable but still had no application
+tables. Home and Events now handle event-list/attendance query failures locally
+and show an explicit unavailable message with an Instagram link. Static public
+content stays visible; unavailable listings are distinct from a genuine empty
+event list. Build, lint, Prisma validation, client-secret checks and 54 unit tests
+pass. Database integration tests are disabled for this production configuration.
+Initial migration and owner provisioning approval is pending separately.
+
 2026-09-30 single-env follow-up: `.env` is the sole private production config and
 owner credential handoff. Production connection/secrets were preserved; local
 reference values are commented out. `.env.local` and `.env.owner` were removed.

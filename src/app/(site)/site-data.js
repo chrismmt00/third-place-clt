@@ -2,7 +2,7 @@ import "server-only";
 import { cache } from "react";
 import { connection } from "next/server";
 import { getSiteSettings, defaultSettings } from "@/lib/settings";
-import { getPublicEvent } from "@/lib/public-events";
+import { getPublicEvent, listPublicEvents } from "@/lib/public-events";
 import { getEventState } from "@/lib/eventStatus";
 import { summaryFrom } from "@/lib/format";
 
@@ -24,6 +24,19 @@ export function socialsFrom(settings) {
     { label: "Instagram", url: settings.instagramUrl },
     { label: "Facebook", url: settings.facebookUrl },
   ].filter((s) => s.url);
+}
+
+/** Keep public content available when event storage is unavailable. */
+export async function loadEventListing(options = {}) {
+  try {
+    const events = await listPublicEvents(options);
+    const items = options.past ? [] : await withCardState(events);
+    return { available: true, events, items };
+  } catch {
+    // Database errors may contain connection details; never log or serialize them.
+    console.error("Public event listings are unavailable.");
+    return { available: false, events: [], items: [] };
+  }
 }
 
 /**

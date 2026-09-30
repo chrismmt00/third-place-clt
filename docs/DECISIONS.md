@@ -1,5 +1,18 @@
 # Decisions
 
+## 2026-09-30: Contain public event-query failures
+
+After the user deployed to Vercel, the homepage returned HTTP 500 with no visible
+content. Read-only inspection of the configured Neon database found no application
+tables. Home awaited an unhandled event query before returning its content; Events
+could fail after streaming its loading shell. Keep database errors contained in
+loadEventListing for these two public listings, including attendance lookups.
+Return a separate availability flag, log only a generic diagnostic and show a
+temporary-unavailable message instead of pretending the database has no events.
+Production initialization still requires confirmation of the earlier explicit
+instruction to leave Neon unchanged. No schema or account writes are part of
+this rendering fix.
+
 ## 2026-09-30: One production environment file
 
 The user requested one env file, including the admin login, and confirmed that

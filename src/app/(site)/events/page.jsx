@@ -1,11 +1,10 @@
 import Link from "next/link";
 import { copy } from "@/content/copy";
 import { site } from "@/content/site";
-import { listPublicEvents } from "@/lib/public-events";
 import { Button } from "@/components/ui/Button";
 import { SegmentedTabs } from "@/components/ui/SegmentedTabs";
-import { EventGrid, NoEvents, PastEventList } from "@/components/site/EventLists";
-import { loadSettings, withCardState } from "../site-data";
+import { EventGrid, EventsUnavailable, NoEvents, PastEventList } from "@/components/site/EventLists";
+import { loadSettings, loadEventListing } from "../site-data";
 
 export const metadata = {
   title: "Events",
@@ -18,7 +17,10 @@ export default async function EventsPage({ searchParams }) {
   const params = await searchParams;
   const past = params.tab === "past";
   const page = Math.max(1, Math.min(10000, Number.parseInt(params.page, 10) || 1));
-  const settings = await loadSettings();
+  const [settings, listing] = await Promise.all([
+    loadSettings(),
+    loadEventListing(past ? { past: true, limit: PAST_PAGE_SIZE, page } : {}),
+  ]);
 
   const tabs = (
     <SegmentedTabs
@@ -34,8 +36,10 @@ export default async function EventsPage({ searchParams }) {
   );
 
   let body;
-  if (past) {
-    const events = await listPublicEvents({ past: true, limit: PAST_PAGE_SIZE, page });
+  if (!listing.available) {
+    body = <EventsUnavailable headingLevel={2} />;
+  } else if (past) {
+    const events = listing.events;
     body =
       events.length > 0 ? (
         <div className="flex max-w-[760px] flex-col gap-5">
@@ -61,7 +65,7 @@ export default async function EventsPage({ searchParams }) {
         </NoEvents>
       );
   } else {
-    const items = await withCardState(await listPublicEvents());
+    const items = listing.items;
     body =
       items.length > 0 ? (
         <EventGrid items={items} headingLevel={2} />
