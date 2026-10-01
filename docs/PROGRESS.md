@@ -2,6 +2,12 @@
 
 ## Status
 
+2026-09-30 visual sample events: `/?demo=1` and `/events?demo=1` show three
+fictional upcoming events (open, three spots left, full) and one past event.
+Sample cards open detail previews, maintain preview navigation and use the
+existing licensed photos. Sample banners and noindex metadata identify the
+preview; RSVPs/directions are disabled. No database rows are inserted.
+
 2026-09-30 production homepage repair: the live root returned HTTP 500; the
 configured production Neon database was reachable but still had no application
 tables. Home and Events now handle event-list/attendance query failures locally

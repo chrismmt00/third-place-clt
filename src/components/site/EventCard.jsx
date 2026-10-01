@@ -20,6 +20,7 @@ export function EventCard({ event, state, headingLevel = 3 }) {
     <article className="relative flex h-full flex-col overflow-hidden rounded-lg border border-border bg-surface text-ink shadow-sm transition-shadow hover:shadow-md has-[a:focus-visible]:shadow-[0_0_0_2px_var(--color-bg),0_0_0_4px_var(--color-focus)]">
       <EventImage imageUrl={event.imageUrl} imageAlt={event.imageAlt} startsAt={event.startsAt} className="aspect-[16/10]" />
       <div className="flex flex-1 flex-col gap-2.5 p-5">
+        {event.isSample && <span className="text-xs font-bold uppercase tracking-wider text-muted">Sample event</span>}
         {state?.badge && (
           <div className="flex flex-wrap gap-2">
             <StatusBadge kind={state.badge} spotsLeft={state.spotsLeft} />
@@ -28,7 +29,7 @@ export function EventCard({ event, state, headingLevel = 3 }) {
         <p className="m-0 text-[15px] leading-[22px] font-bold text-accent">{formatWhen(event.startsAt)}</p>
         <Heading className="m-0 font-display text-xl font-bold tracking-[-0.01em] text-pretty [overflow-wrap:anywhere]">
           <Link
-            href={`/events/${event.slug}`}
+            href={`/events/${event.slug}${event.isSample ? "?demo=1" : ""}`}
             className="text-ink no-underline outline-none after:absolute after:inset-0 after:rounded-lg after:content-[''] hover:text-ink focus-visible:underline focus-visible:decoration-primary focus-visible:decoration-2"
           >
             {event.title}

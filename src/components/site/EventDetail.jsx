@@ -48,6 +48,7 @@ function rsvpSubline(event, spotsLeft) {
 }
 
 function RsvpArea({ event, state, contactEmail, rsvpAction, preview }) {
+  if (event.isSample) return <RsvpPanel icon={Lock} title="Preview only" body="This is a sample event. RSVPs are disabled and no places can be booked." />;
   const upcoming = { href: "/events", label: copy.detail.upcoming };
   const others = { href: "/events", label: copy.detail.otherEvents };
 
@@ -117,7 +118,7 @@ export function EventDetail({ event, state, contactEmail, rsvpAction, preview = 
   const until = sameDay ? `until ${formatTime(event.endsAt)}` : `until ${formatWhen(event.endsAt)}`;
   const showAttendees = !cancelled && event.rsvpEnabled && (event.attendeeCount !== null || event.showAttendeeNames);
   const backLink = (
-    <Link href="/events" className="inline-flex min-h-11 w-max items-center gap-1.5 text-base font-semibold no-underline focus-ring">
+    <Link href={event.isSample ? "/events?demo=1" : "/events"} className="inline-flex min-h-11 w-max items-center gap-1.5 text-base font-semibold no-underline focus-ring">
       <ArrowLeft size={18} aria-hidden="true" />
       {copy.detail.back}
     </Link>
@@ -192,7 +193,7 @@ export function EventDetail({ event, state, contactEmail, rsvpAction, preview = 
                 <dd className="m-0 flex flex-col gap-0.5">
                   <strong className="text-[17px] leading-6">{event.locationName}</strong>
                   <span className="text-[15px] leading-[22px] text-muted">{event.address}</span>
-                  {!cancelled && (
+                  {!cancelled && event.directionsUrl && (
                     <a href={event.directionsUrl} className="inline-flex min-h-11 w-max items-center gap-1.5 text-[15px] font-bold focus-ring">
                       <Navigation size={16} aria-hidden="true" />
                       {copy.detail.directions}

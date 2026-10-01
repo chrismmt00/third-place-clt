@@ -35,7 +35,7 @@ export function PastEventList({ events }) {
         return (
           <li key={event.id}>
             <Link
-              href={`/events/${event.slug}`}
+              href={`/events/${event.slug}${event.isSample ? "?demo=1" : ""}`}
               className="grid grid-cols-[56px_minmax(0,1fr)] items-center gap-3.5 border-b border-border py-3.5 text-ink no-underline focus-ring hover:text-ink [&:hover_.title]:underline"
             >
               <span className="flex flex-col items-center rounded-[10px] bg-surface-2 py-1.5">

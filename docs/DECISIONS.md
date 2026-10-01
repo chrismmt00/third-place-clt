@@ -1,5 +1,15 @@
 # Decisions
 
+## 2026-09-30: Fictional events for visual review
+
+The user requested fake events to see the layout. Add opt-in `demo=1` previews
+to Home, Events and sample event details, keeping normal public listings separate.
+The fixture dates/venues/counts are explicitly fictional; a fixed reference date
+keeps open/limited/full/past visual states stable. Sample IDs are not valid
+database IDs, and the detail page never renders the registration form or passes
+a registration action for them. Previews are marked noindex and excluded from
+the database-backed sitemap. No production migration, seed or other write is used.
+
 ## 2026-09-30: Contain public event-query failures
 
 After the user deployed to Vercel, the homepage returned HTTP 500 with no visible

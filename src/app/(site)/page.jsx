@@ -5,16 +5,25 @@ import { home, site } from "@/content/site";
 import { Button } from "@/components/ui/Button";
 import { CommunityPhoto } from "@/components/site/CommunityPhoto";
 import { photos } from "@/content/photos";
+import { sampleListing, sampleMetadata } from "@/content/sample-events";
+import { SampleEventsBanner } from "@/components/site/SampleEventsBanner";
 import { EventGrid, EventsUnavailable, NoEvents } from "@/components/site/EventLists";
 import { loadSettings, socialsFrom, loadEventListing } from "./site-data";
 
-export default async function HomePage() {
-  const [settings, listing] = await Promise.all([loadSettings(), loadEventListing({ limit: 3 })]);
+export async function generateMetadata({ searchParams }) {
+  return (await searchParams).demo === "1" ? sampleMetadata : {};
+}
+
+export default async function HomePage({ searchParams }) {
+  const demo = (await searchParams).demo === "1";
+  const eventsHref = demo ? "/events?demo=1" : "/events";
+  const [settings, listing] = await Promise.all([loadSettings(), demo ? sampleListing({ limit: 3 }) : loadEventListing({ limit: 3 })]);
   const next = listing.items;
   const chatUrl = settings.chatUrl;
 
   return (
     <>
+      {demo && <SampleEventsBanner />}
       {/* Hero */}
       <section className="mx-auto flex max-w-content flex-col gap-5 px-4 pb-10 pt-8 md:px-8 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:items-center lg:gap-16 lg:px-12 lg:pb-[88px] lg:pt-[72px]">
         <div className="flex flex-col gap-5 lg:gap-6">
@@ -24,7 +33,7 @@ export default async function HomePage() {
             {home.intro}
           </p>
           <div className="flex flex-col gap-2.5 lg:mt-2 lg:flex-row lg:flex-wrap lg:gap-3">
-            <Button href="/events" size="xl" iconRight={ArrowRight}>
+            <Button href={eventsHref} size="xl" iconRight={ArrowRight}>
               {copy.home.cta}
             </Button>
             {chatUrl && (
@@ -48,7 +57,7 @@ export default async function HomePage() {
             Coming up next
           </h2>
           {next.length > 0 && (
-            <Link href="/events" className="hidden min-h-11 items-center gap-1.5 text-[17px] font-bold no-underline focus-ring lg:inline-flex">
+            <Link href={eventsHref} className="hidden min-h-11 items-center gap-1.5 text-[17px] font-bold no-underline focus-ring lg:inline-flex">
               See all events
               <ArrowRight size={18} aria-hidden="true" />
             </Link>
@@ -57,7 +66,7 @@ export default async function HomePage() {
         {!listing.available ? <EventsUnavailable /> : next.length > 0 ? (
           <>
             <EventGrid items={next} />
-            <Button href="/events" variant="secondary" size="xl" iconRight={ArrowRight} className="lg:hidden">
+            <Button href={eventsHref} variant="secondary" size="xl" iconRight={ArrowRight} className="lg:hidden">
               See all events
             </Button>
           </>

@@ -24,3 +24,6 @@ photo). Files are served from this application, without runtime stock-provider
 requests. Next Image supplies responsive sizes and lazy loading below the fold;
 the hero images load eagerly. Existing aspect ratios and security headers remain
 in place. Update `src/content/photos.js` when replacing these with client photos.
+
+The opt-in sample-event previews also reuse these three images as illustrative
+event covers. Preview banners identify the events as fictional.
