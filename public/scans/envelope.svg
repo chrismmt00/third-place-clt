@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200"><!-- Placeholder: envelope, Contact. Replace with the client's scan. --><defs><filter id="hand" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="11" result="warp"/><feDisplacementMap in="SourceGraphic" in2="warp" scale="7" xChannelSelector="R" yChannelSelector="G" result="wobbly"/><feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="9" result="grain"/><feColorMatrix in="grain" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -1.7 1.8" result="speck"/><feComposite in="wobbly" in2="speck" operator="in"/></filter></defs><g filter="url(#hand)" stroke-linejoin="round" stroke-linecap="round">
+<g transform="rotate(4 100 100)">
+<rect x="24" y="52" width="152" height="104" rx="6" fill="#fff" stroke="#fff" stroke-width="12"/>
+<rect x="24" y="52" width="152" height="104" rx="6" fill="#7A9CC5"/>
+<path d="M28 58l72 52 72-52" fill="none" stroke="#22190F" stroke-width="4"/>
+<path d="M28 152l52-40M172 152l-52-40" fill="none" stroke="#22190F" stroke-width="3" opacity=".55"/>
+<rect x="138" y="62" width="26" height="30" fill="#9D3C1E" stroke="#FFFDF6" stroke-width="3" stroke-dasharray="3 3"/>
+<circle cx="151" cy="77" r="6" fill="#F1E875"/>
+</g>
+</g></svg>

@@ -25,6 +25,17 @@ export const home = {
   chatBody: "Stay in touch between meetups, share a thought and hear what the community is up to.",
 };
 
+// Birdcall-style index on the home page. Draft notes for client review; `art`
+// points at placeholder drawings in public/scans until her own scans arrive.
+export const homeIndex = [
+  { key: "about", label: "About", href: "/about", note: "who we are & what a third place is", art: "/scans/mug.svg" },
+  { key: "events", label: "Events", href: "/events", note: "meetups, twice a month", art: "/scans/calendar.svg" },
+  { key: "meetups", label: "How a meetup works", href: "/about#meetups", note: "name tags, groups of three, new questions", art: "/scans/nametag.svg" },
+  { key: "contact", label: "Contact", href: "/contact", note: "say hello or ask a question", art: "/scans/envelope.svg" },
+  { key: "chat", label: "Community chat", note: "keep talking between meetups", art: "/scans/bubbles.svg", external: true },
+  { key: "instagram", label: "Instagram", note: "photos & announcements", art: "/scans/polaroid.svg", external: true },
+];
+
 export const about = {
   eyebrow: "About us",
   headline: "A portal to communal connectivity.",

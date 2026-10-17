@@ -1,4 +1,4 @@
-import { Bricolage_Grotesque, Figtree } from "next/font/google";
+import { Bagel_Fat_One, Bricolage_Grotesque, Courier_Prime, Figtree, Hanken_Grotesk } from "next/font/google";
 import "./globals.css";
 import { site } from "@/content/site";
 
@@ -12,6 +12,24 @@ const display = Bricolage_Grotesque({
 const body = Figtree({
   variable: "--font-figtree",
   subsets: ["latin"],
+});
+
+// Public-site direction (see .theme-zine in globals.css). Admin keeps the fonts above.
+const zineDisplay = Bagel_Fat_One({
+  variable: "--font-bagel",
+  subsets: ["latin"],
+  weight: "400",
+});
+
+const zineBody = Hanken_Grotesk({
+  variable: "--font-hanken",
+  subsets: ["latin"],
+});
+
+const zineMono = Courier_Prime({
+  variable: "--font-courier",
+  subsets: ["latin"],
+  weight: ["400", "700"],
 });
 
 export const metadata = {
@@ -29,7 +47,7 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable}`}>
+    <html lang="en" className={`${display.variable} ${body.variable} ${zineDisplay.variable} ${zineBody.variable} ${zineMono.variable}`}>
       <body className="min-h-dvh font-body">{children}</body>
     </html>
   );

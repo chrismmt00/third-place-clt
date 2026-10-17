@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200"><!-- Placeholder: tear-off calendar, Events. Replace with the client's scan. --><defs><filter id="hand" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="5" result="warp"/><feDisplacementMap in="SourceGraphic" in2="warp" scale="7" xChannelSelector="R" yChannelSelector="G" result="wobbly"/><feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="9" result="grain"/><feColorMatrix in="grain" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -1.7 1.8" result="speck"/><feComposite in="wobbly" in2="speck" operator="in"/></filter></defs><g filter="url(#hand)" stroke-linejoin="round" stroke-linecap="round">
+<rect x="34" y="34" width="132" height="140" rx="8" fill="#fff" stroke="#fff" stroke-width="12"/>
+<rect x="34" y="34" width="132" height="140" rx="8" fill="#F1E875"/>
+<path d="M34 42a8 8 0 0 1 8-8h116a8 8 0 0 1 8 8v30H34z" fill="#9D3C1E"/>
+<g fill="#22190F"><circle cx="66" cy="34" r="6"/><circle cx="134" cy="34" r="6"/></g>
+<text x="100" y="62" text-anchor="middle" font-family="Courier New, monospace" font-weight="700" font-size="20" fill="#F1E875" letter-spacing="3">OCT</text>
+<text x="100" y="148" text-anchor="middle" font-family="Georgia, serif" font-weight="700" font-size="66" fill="#22190F">18</text>
+<path d="M40 166c20 4 40-3 60 1s40-3 60 0" fill="none" stroke="#CC9842" stroke-width="3"/>
+</g></svg>

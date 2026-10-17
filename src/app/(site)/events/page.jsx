@@ -3,7 +3,8 @@ import { copy } from "@/content/copy";
 import { site } from "@/content/site";
 import { Button } from "@/components/ui/Button";
 import { SegmentedTabs } from "@/components/ui/SegmentedTabs";
-import { EventGrid, EventsUnavailable, NoEvents, PastEventList } from "@/components/site/EventLists";
+import { EventsUnavailable, NoEvents } from "@/components/site/EventLists";
+import { EventListing } from "@/components/site/EventListing";
 import { loadSettings, loadEventListing } from "../site-data";
 import { sampleListing, sampleMetadata } from "@/content/sample-events";
 import { SampleEventsBanner } from "@/components/site/SampleEventsBanner";
@@ -49,8 +50,8 @@ export default async function EventsPage({ searchParams }) {
     const events = listing.events;
     body =
       events.length > 0 ? (
-        <div className="flex max-w-[760px] flex-col gap-5">
-          <PastEventList events={events} />
+        <div className="flex max-w-[960px] flex-col gap-5">
+          <EventListing items={events.map((event) => ({ event }))} headingLevel={2} showYear />
           <div className="flex flex-col gap-2.5 md:flex-row">
             {!demo && page > 1 && (
               <Button href={`/events?tab=past${page > 2 ? `&page=${page - 1}` : ""}`} variant="secondary" size="lg">
@@ -75,7 +76,9 @@ export default async function EventsPage({ searchParams }) {
     const items = listing.items;
     body =
       items.length > 0 ? (
-        <EventGrid items={items} headingLevel={2} />
+        <div className="max-w-[960px]">
+          <EventListing items={items} headingLevel={2} />
+        </div>
       ) : (
         <NoEvents title={copy.empty.events} body={copy.empty.eventsBody} chatUrl={settings.chatUrl} chatLabel={site.chatLabel} headingLevel={2} primary>
           <Link href="/events?tab=past" className="flex min-h-11 items-center text-base font-semibold focus-ring">
@@ -91,10 +94,10 @@ export default async function EventsPage({ searchParams }) {
       <div className="mx-auto flex max-w-content flex-col gap-5 px-4 pb-12 pt-7 md:gap-6 md:px-8 md:pb-16 md:pt-10 lg:gap-8 lg:px-12 lg:pb-[88px] lg:pt-14">
         <div className="flex flex-col gap-5 md:gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div className="flex flex-col gap-2">
-            <h1 className="m-0 font-display text-[36px] leading-10 font-extrabold tracking-[-0.02em] md:text-3xl lg:text-4xl lg:tracking-[-0.03em]">
+            <h1 className="m-0 font-display text-[44px] leading-[48px] lg:text-[64px] lg:leading-[66px]">
               {past ? "Past events" : "Upcoming events"}
             </h1>
-            <p className="m-0 hidden text-lg text-muted lg:block">
+            <p className="m-0 hidden font-mono text-[17px] text-muted lg:block">
               {past ? "Meetups from the last year, newest first." : "We meet up twice a month. RSVP to save your spot."}
             </p>
           </div>
