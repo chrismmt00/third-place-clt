@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200"><!-- Placeholder: coffee mug, About. Replace with the client's scan. --><defs><filter id="hand" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="3" result="warp"/><feDisplacementMap in="SourceGraphic" in2="warp" scale="7" xChannelSelector="R" yChannelSelector="G" result="wobbly"/><feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="9" result="grain"/><feColorMatrix in="grain" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -1.7 1.8" result="speck"/><feComposite in="wobbly" in2="speck" operator="in"/></filter></defs><g filter="url(#hand)" stroke-linejoin="round" stroke-linecap="round">
+<g stroke="#fff" stroke-width="12" fill="#fff"><path d="M48 78h88l-8 86c-1 8-6 12-14 12H70c-8 0-13-4-14-12z"/><path d="M134 96c22-4 34 6 30 24s-18 26-36 24"/><path d="M76 66c-8-12 8-18 0-30M98 66c-8-12 8-18 0-30M120 66c-8-12 8-18 0-30" fill="none"/></g>
+<path d="M134 96c22-4 34 6 30 24s-18 26-36 24" fill="none" stroke="#CC9842" stroke-width="12"/>
+<path d="M48 78h88l-8 86c-1 8-6 12-14 12H70c-8 0-13-4-14-12z" fill="#CC9842"/>
+<path d="M53 112h80l-2 20H55z" fill="#9D3C1E"/>
+<ellipse cx="92" cy="80" rx="44" ry="7" fill="#7A4E1A"/>
+<path d="M76 64c-8-12 8-18 0-30M98 64c-8-12 8-18 0-30M120 64c-8-12 8-18 0-30" fill="none" stroke="#67721B" stroke-width="5"/>
+</g></svg>

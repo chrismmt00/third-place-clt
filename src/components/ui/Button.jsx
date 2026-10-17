@@ -2,8 +2,9 @@ import Link from "next/link";
 import { LoaderCircle } from "lucide-react";
 import { cn } from "@/lib/cn";
 
+// --button-radius lets a theme reshape every button (the public site uses pills).
 const base =
-  "inline-flex items-center justify-center gap-2 rounded-md font-bold no-underline transition-colors focus-ring disabled:cursor-not-allowed";
+  "inline-flex items-center justify-center gap-2 rounded-[var(--button-radius,var(--radius-md))] font-bold no-underline transition-colors focus-ring disabled:cursor-not-allowed";
 
 const variants = {
   primary: "bg-primary text-on-primary hover:bg-primary-hover hover:text-on-primary",

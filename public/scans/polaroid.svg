@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200"><!-- Placeholder: instant photo, Instagram. Replace with the client's scan. --><defs><filter id="hand" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="17" result="warp"/><feDisplacementMap in="SourceGraphic" in2="warp" scale="7" xChannelSelector="R" yChannelSelector="G" result="wobbly"/><feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="9" result="grain"/><feColorMatrix in="grain" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -1.7 1.8" result="speck"/><feComposite in="wobbly" in2="speck" operator="in"/></filter></defs><g filter="url(#hand)" stroke-linejoin="round" stroke-linecap="round">
+<g transform="rotate(-5 100 100)">
+<rect x="38" y="26" width="124" height="148" rx="3" fill="#fff" stroke="#fff" stroke-width="12"/>
+<rect x="38" y="26" width="124" height="148" rx="3" fill="#FFFDF6"/>
+<rect x="48" y="36" width="104" height="100" fill="#7A9CC5"/>
+<circle cx="122" cy="66" r="16" fill="#CC9842"/>
+<path d="M48 136v-30c18-14 30-14 46-2s30 4 58-12v44z" fill="#67721B"/>
+<path d="M62 156c14-6 26 4 40-2s24 2 36-2" fill="none" stroke="#9D3C1E" stroke-width="4"/>
+</g>
+</g></svg>

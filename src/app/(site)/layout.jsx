@@ -1,5 +1,6 @@
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
+import { Silhouettes } from "@/components/site/Silhouettes";
 import { site } from "@/content/site";
 import { loadSettings, socialsFrom } from "./site-data";
 
@@ -9,7 +10,8 @@ export const dynamic = "force-dynamic";
 export default async function SiteLayout({ children }) {
   const settings = await loadSettings();
   return (
-    <div className="flex min-h-dvh flex-col">
+    <div className="theme-zine relative isolate flex min-h-dvh flex-col">
+      <Silhouettes />
       <a
         href="#main"
         className="sr-only z-50 rounded-md bg-ink px-4 py-3 font-bold text-bg focus:not-sr-only focus:fixed focus:left-4 focus:top-4 hover:text-bg"

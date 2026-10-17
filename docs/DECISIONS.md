@@ -183,3 +183,23 @@ checkout contains the app, while retaining its design and flows. The Account
 addition is necessary for the newly requested email handoff. Browser smoke tests
 could not run because automatic approval review rejected the temporary loopback
 server launch as blocked by policy. Production readiness is not a launch claim.
+
+## 2026-10-17 · Public-site design direction (for client review)
+
+The client asked for a simpler, artsier look in the spirit of birdcall.online, with
+her palette (color-hex.com/color-palette/1072931), mixed-media scans, the Nature
+School poster's typewriter schedule and binoculars GIF, and cut-out figures like
+the "Mon Absente" poster. First pass on branch `design/birdcall-direction`:
+
+- `.theme-zine` in globals.css re-points the existing tokens for the `(site)`
+  layout only; admin keeps the original look. Fonts: Bagel Fat One (display),
+  Hanken Grotesk (body), Courier Prime (dates and labels). Sky and ochre are
+  decorative only; they are too light for text on paper.
+- Home is a Birdcall-style index (`ScanIndex`) with an object beside each link.
+  `public/scans/*.svg` are placeholder drawings; replace them with her scans
+  (transparent PNGs, roughly square) and update `homeIndex` in content/site.js.
+- Events render as a dated schedule with numbered places (`EventListing`)
+  instead of image cards. Event images still show on the detail page.
+- `Binoculars` is a CSS take on the GIF using licensed stock; drift stops for
+  reduced motion. `Silhouettes` are placeholder figures behind the page.
+- Copy is unchanged apart from the index notes; the client is rewriting it.

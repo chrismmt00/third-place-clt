@@ -82,7 +82,7 @@ export function Header({ siteName, chatUrl, chatLabel }) {
 
   return (
     <>
-      <header className="border-b border-border bg-bg">
+      <header className="border-b border-ink/15">
         {/* Desktop */}
         <div className="hidden h-20 items-center justify-between gap-6 px-12 lg:flex">
           {homeLink("text-[22px]")}
@@ -93,15 +93,15 @@ export function Header({ siteName, chatUrl, chatLabel }) {
                   key={key}
                   href={href}
                   aria-current="page"
-                  className="flex h-11 items-center px-3.5 text-base font-bold text-ink underline decoration-primary decoration-[3px] underline-offset-[10px] focus-ring hover:text-ink"
+                  className="flex h-11 items-center px-3.5 font-mono text-[17px] font-bold text-ink no-underline focus-ring hover:text-ink"
                 >
-                  {label}
+                  <span className="-rotate-2 bg-butter px-2 py-0.5">{label}</span>
                 </Link>
               ) : (
                 <Link
                   key={key}
                   href={href}
-                  className="flex h-11 items-center px-3.5 text-base font-semibold text-muted no-underline focus-ring hover:text-ink"
+                  className="flex h-11 items-center px-3.5 font-mono text-[17px] text-ink no-underline decoration-primary decoration-2 underline-offset-4 focus-ring hover:text-ink hover:underline"
                 >
                   {label}
                 </Link>
@@ -109,7 +109,7 @@ export function Header({ siteName, chatUrl, chatLabel }) {
             )}
             <Link
               href="/events"
-              className="ml-3 inline-flex h-12 items-center gap-2 rounded-md bg-primary px-5 text-base font-bold text-on-primary no-underline focus-ring hover:bg-primary-hover hover:text-on-primary"
+              className="ml-3 inline-flex h-12 -rotate-1 items-center gap-2 rounded-full bg-primary px-5 text-base font-bold text-on-primary no-underline focus-ring hover:bg-primary-hover hover:text-on-primary"
             >
               {copy.nav.cta}
               <ArrowRight size={18} aria-hidden="true" />
@@ -127,7 +127,7 @@ export function Header({ siteName, chatUrl, chatLabel }) {
             aria-expanded={open}
             aria-controls="mobile-menu"
             onClick={() => setOpen(true)}
-            className="flex h-12 w-12 items-center justify-center rounded-md border-[1.5px] border-border bg-surface text-ink focus-ring"
+            className="flex h-12 w-12 items-center justify-center rounded-full border-[1.5px] border-ink bg-butter text-ink focus-ring"
           >
             <Menu size={22} aria-hidden="true" />
           </button>
@@ -136,8 +136,8 @@ export function Header({ siteName, chatUrl, chatLabel }) {
 
       {/* Mobile, open */}
       {open && (
-        <div ref={panel} id="mobile-menu" className="fixed inset-0 z-50 overflow-y-auto bg-bg lg:hidden">
-          <div className="flex h-16 items-center justify-between border-b border-border pl-4 pr-3">
+        <div ref={panel} id="mobile-menu" className="fixed inset-0 z-50 overflow-y-auto bg-butter lg:hidden">
+          <div className="flex h-16 items-center justify-between border-b border-ink/20 pl-4 pr-3">
             {homeLink("text-xl")}
             <button
               type="button"
@@ -145,7 +145,7 @@ export function Header({ siteName, chatUrl, chatLabel }) {
               aria-expanded="true"
               aria-controls="mobile-menu"
               onClick={() => setOpen(false)}
-              className="flex h-12 w-12 items-center justify-center rounded-md border-[1.5px] border-ink bg-ink text-bg focus-ring"
+              className="flex h-12 w-12 items-center justify-center rounded-full border-[1.5px] border-ink bg-ink text-bg focus-ring"
             >
               <X size={22} aria-hidden="true" />
             </button>
@@ -157,16 +157,16 @@ export function Header({ siteName, chatUrl, chatLabel }) {
                 href={href}
                 onClick={close}
                 aria-current={key === active ? "page" : undefined}
-                className="flex min-h-[60px] items-center justify-between border-b border-border font-display text-[26px] font-bold text-ink no-underline focus-ring hover:text-ink"
+                className="flex min-h-[64px] items-center justify-between border-b border-dashed border-ink/30 font-display text-[28px] text-ink no-underline focus-ring hover:text-ink"
               >
                 {label}
-                <ChevronRight size={20} aria-hidden="true" className="text-muted" />
+                <ChevronRight size={20} aria-hidden="true" className="text-ink" />
               </Link>
             ))}
             <Link
               href="/events"
               onClick={close}
-              className="mt-6 flex h-[52px] items-center justify-center gap-2 rounded-md bg-primary text-[17px] font-bold text-on-primary no-underline focus-ring hover:bg-primary-hover hover:text-on-primary"
+              className="mt-6 flex h-[52px] items-center justify-center gap-2 rounded-full bg-primary text-[17px] font-bold text-on-primary no-underline focus-ring hover:bg-primary-hover hover:text-on-primary"
             >
               {copy.nav.cta}
               <ArrowRight size={18} aria-hidden="true" />
